@@ -8,14 +8,19 @@ const recipeSchema = new Schema(
     name: { type: String, required: true },
     ingredients: [
       {
-        ingredient_id: {
+        ingredient: {
           type: Schema.Types.ObjectId,
           ref: 'Ingredient',
           required: true
         },
-        quantity: { type: Decimal128, required: true }
+        quantity: { type: mongoose.Types.Decimal128, required: true }
       }
-    ]
+    ],
+    category: {
+      type: String,
+      required: true,
+      enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Dessert']
+    }
   },
   { timestamps: true }
 )
