@@ -1,20 +1,27 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var express = require('express')
+var logger = require('morgan')
+const cors = require('cors')
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var indexRouter = require('./routes/index')
+var authRouter = require('./routes/authentication')
 
-var app = express();
+const PORT = process.env.PORT || 3001
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+const db = require('./db')
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+var app = express()
 
-module.exports = app;
+app.use(cors())
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+app.use('/auth', authRouter)
+
+app.use('/', (req, res) => {
+  res.send(`Connected!`)
+})
+
+app.listen(PORT, () => {
+  console.log(`Running Express server on Port ${PORT} . . .`)
+})
