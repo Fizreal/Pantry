@@ -42,7 +42,6 @@ const addIngredient = async (req, res) => {
     edamanID,
     measure
   })
-  console.log(ingredient)
   if (!ingredient) {
     ingredient = await Ingredient.create({
       user: user._id,
@@ -60,12 +59,51 @@ const addIngredient = async (req, res) => {
     ) {
       recipe.ingredients.push({ ingredient: ingredient._id, quantity })
       await recipe.save()
-      res.send(recipe)
+      return res.send(recipe)
     }
+    res.send('You are already using that ingredient in this recipe!')
   } catch (error) {
     console.log(error)
     res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
   }
 }
 
-module.exports = { index, show, createRecipe, add: addIngredient }
+const remove = async (req, res) => {
+  let recipe = await Recipe.findById(req.params.recipeId).populate(
+    'ingredients.ingredient'
+  )
+  let ingredient = await Ingredient.findById(req.params.ingredientId)
+  let index = recipe.ingredients
+    .map((ingredientObj) => ingredientObj.ingredient.edamanID)
+    .indexOf(ingredient.edamanID)
+  try {
+    if (index !== -1) {
+      recipe.ingredients.splice(index, 1)
+      await recipe.save()
+      return res.send(recipe)
+    }
+    res.send('Could not find that ingredient in this recipe')
+  } catch (error) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+  }
+}
+
+const deleteRecipe = async (req, res) => {
+  try {
+    await Recipe.findByIdAndDelete(req.params.recipeId)
+    res.send('Success')
+  } catch (err) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+  }
+}
+
+module.exports = {
+  index,
+  show,
+  createRecipe,
+  add: addIngredient,
+  remove,
+  delete: deleteRecipe
+}

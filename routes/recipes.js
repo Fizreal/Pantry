@@ -5,6 +5,8 @@ const middleware = require('../middleware')
 router.get('/', recipeCtrl.index)
 router.get('/:recipeId', recipeCtrl.show)
 router.post('/create', recipeCtrl.createRecipe)
-router.put('/:recipeId/add', recipeCtrl.add)
+router.delete('/:recipeId', recipeCtrl.delete)
+router.put('/:recipe_id/add', recipeCtrl.add)
+router.put('/:recipeId/remove/:ingredientId', recipeCtrl.remove)
 
 module.exports = router
