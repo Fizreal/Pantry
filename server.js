@@ -3,6 +3,7 @@ const logger = require('morgan')
 const cors = require('cors')
 
 const authRouter = require('./routes/authentication')
+const ingredientRouter = require('./routes/ingredients')
 const recipeRouter = require('./routes/recipes')
 const groceryListRouter = require('./routes/groceryLists')
 
@@ -18,6 +19,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/auth', authRouter)
+app.use('/ingredient', ingredientRouter)
 app.use('/recipe', recipeRouter)
 
 app.use('/', (req, res) => {
