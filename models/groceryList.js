@@ -8,11 +8,11 @@ const groceryListSchema = new Schema(
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     ingredients: [
       {
-        Ingredient: { type: Schema.Types.ObjectId, ref: 'Ingredient' },
+        ingredient: { type: Schema.Types.ObjectId, ref: 'Ingredient' },
         quantity: { type: mongoose.Types.Decimal128 }
       }
     ],
-    finished: { type: Boolean, required: true }
+    finished: { type: Boolean, required: true, default: false }
   },
   { timestamps: true }
 )
