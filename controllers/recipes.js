@@ -54,8 +54,8 @@ const addIngredient = async (req, res) => {
     let recipe = await Recipe.findById(req.params.recipeId)
     if (
       !recipe.ingredients
-        .map((ingredient) => ingredient.ingredient)
-        .includes(ingredient._id)
+        .map((ingredient) => ingredient.ingredient.toString())
+        .includes(ingredient._id.toString())
     ) {
       recipe.ingredients.push({ ingredient: ingredient._id, quantity })
       await recipe.save()
@@ -69,13 +69,11 @@ const addIngredient = async (req, res) => {
 }
 
 const remove = async (req, res) => {
-  let recipe = await Recipe.findById(req.params.recipeId).populate(
-    'ingredients.ingredient'
-  )
-  let ingredient = await Ingredient.findById(req.params.ingredientId)
+  let recipe = await Recipe.findById(req.params.recipeId)
   let index = recipe.ingredients
-    .map((ingredientObj) => ingredientObj.ingredient.edamanID)
-    .indexOf(ingredient.edamanID)
+    .map((ingredientObj) => ingredientObj.ingredient.toString())
+    .indexOf(req.params.ingredientId)
+  console.log(index)
   try {
     if (index !== -1) {
       recipe.ingredients.splice(index, 1)

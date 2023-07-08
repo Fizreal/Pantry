@@ -21,6 +21,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/auth', authRouter)
 app.use('/ingredient', ingredientRouter)
 app.use('/recipe', recipeRouter)
+app.use('/groceryList', groceryListRouter)
 
 app.use('/', (req, res) => {
   res.send(`Connected!`)

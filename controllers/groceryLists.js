@@ -34,9 +34,57 @@ const create = async (req, res) => {
     res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
   }
 }
-const addRecipe = async (req, res) => {}
-const remove = async (req, res) => {}
-const deleteGroceryList = async (req, res) => {}
+const addRecipe = async (req, res) => {
+  let recipe = await Recipe.findById(req.params.recipeId)
+  console.log(recipe)
+  try {
+    let groceryList = await GroceryList.findById(req.params.groceryId)
+    console.log(groceryList.recipes.map((recipe) => recipe.toString()))
+    if (
+      !groceryList.recipes
+        .map((recipe) => recipe.toString())
+        .includes(req.params.recipeId)
+    ) {
+      groceryList.recipes.push(recipe._id)
+      await groceryList.save()
+      return res.send(groceryList)
+    }
+    res.send('You already added that recipe to this grocery list!')
+  } catch (error) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+  }
+}
+
+const remove = async (req, res) => {
+  let groceryList = await GroceryList.findById(req.params.groceryId)
+  let index = groceryList.recipes
+    .map((recipe) => recipe.toString())
+    .indexOf(req.params.recipeId)
+  console.log(index)
+  try {
+    if (index !== -1) {
+      groceryList.recipes.splice(index, 1)
+      await groceryList.save()
+      return res.send(groceryList)
+    }
+    res.send('Could not find that recipe in this grocery list')
+  } catch (error) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+  }
+}
+
+const deleteGroceryList = async (req, res) => {
+  try {
+    await GroceryList.findByIdAndDelete(req.params.groceryId)
+    res.send('Success')
+  } catch (err) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+  }
+}
+
 const compile = async (req, res) => {}
 const finished = async (req, res) => {}
 
