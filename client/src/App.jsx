@@ -3,17 +3,20 @@ import './index.css'
 import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { CheckSession } from './services/Auth'
+import { getRecipes } from './services/recipeServices'
 import Nav from './components/Nav'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Recipes from './pages/Recipes'
+import CreateRecipe from './pages/CreateRecipe'
 import RecipeDetail from './pages/RecipeDetail'
 import Groceries from './pages/Groceries'
 import GroceryDetail from './pages/GroceryDetail'
 
 const App = () => {
   const [user, setUser] = useState(null)
+  const [recipes, setRecipes] = useState(null)
 
   const handleLogOut = () => {
     setUser(null)
@@ -25,11 +28,17 @@ const App = () => {
     setUser(user)
   }
 
+  const updateRecipes = async () => {
+    let recipes = await getRecipes()
+    setRecipes(recipes.data)
+  }
+
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
       checkToken()
     }
+    updateRecipes()
   }, [])
 
   return (
@@ -40,8 +49,15 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/recipes" element={<Recipes />} />
-          <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
+          <Route path="/recipes" element={<Recipes recipes={recipes} />} />
+          <Route
+            path="/recipes/new"
+            element={<CreateRecipe setRecipes={setRecipes} />}
+          />
+          <Route
+            path="/recipes/:recipeId"
+            element={<RecipeDetail recipes={recipes} />}
+          />
           <Route path="/groceries" element={<Groceries />} />
           <Route path="/groceries/:groceryId" element={<GroceryDetail />} />
         </Routes>
