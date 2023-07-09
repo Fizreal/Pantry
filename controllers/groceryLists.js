@@ -36,10 +36,8 @@ const create = async (req, res) => {
 }
 const addRecipe = async (req, res) => {
   let recipe = await Recipe.findById(req.params.recipeId)
-  console.log(recipe)
   try {
     let groceryList = await GroceryList.findById(req.params.groceryId)
-    console.log(groceryList.recipes.map((recipe) => recipe.toString()))
     if (
       !groceryList.recipes
         .map((recipe) => recipe.toString())
@@ -61,7 +59,6 @@ const remove = async (req, res) => {
   let index = groceryList.recipes
     .map((recipe) => recipe.toString())
     .indexOf(req.params.recipeId)
-  console.log(index)
   try {
     if (index !== -1) {
       groceryList.recipes.splice(index, 1)
@@ -85,7 +82,31 @@ const deleteGroceryList = async (req, res) => {
   }
 }
 
-const compile = async (req, res) => {}
+const compile = async (req, res) => {
+  let groceryList = await GroceryList.findById(req.params.groceryId).populate(
+    'recipes'
+  )
+  console.log(groceryList)
+  let ingredients = []
+  try {
+    groceryList.recipes.forEach((recipe) => {
+      recipe.ingredients.forEach((ingredientObj) => {
+        let index = ingredients.indexOf(ingredientObj.ingredient.toString())
+        if (index === -1) {
+          ingredients.push(ingredientObj.ingredient.toString())
+          groceryList.ingredients.push(ingredientObj)
+        } else {
+          groceryList.ingredients[index].quantity += ingredientObj.quantity
+        }
+      })
+    })
+    await groceryList.save()
+    res.send(groceryList)
+  } catch (error) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+  }
+}
 const finished = async (req, res) => {}
 
 module.exports = {
