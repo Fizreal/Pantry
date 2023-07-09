@@ -9,15 +9,6 @@ export const getRecipes = async () => {
   }
 }
 
-// export const getRecipe = async (search) => {
-//   try {
-//     const response = Client.get('/ingredient/search', search)
-//     return response
-//   } catch (error) {
-//     throw error
-//   }
-// }
-
 export const createRecipe = async (data) => {
   try {
     const response = Client.get('/recipe/create', data)
