@@ -7,8 +7,8 @@ const User = require('../models/user')
 const Ingredient = require('../models/ingredient')
 
 const index = async (req, res) => {
-  const { email } = req.body
-  let user = await User.findOne({ email })
+  const { payload } = res.locals
+  let user = await User.findById(payload.id)
   let ingredients = await Ingredient.find({ user: user._id })
   res.send(ingredients)
 }

@@ -9,23 +9,23 @@ const Recipe = require('../models/recipe')
 const Ingredient = require('../models/ingredient')
 
 const index = async (req, res) => {
-  const { email } = req.body
-  let user = await User.findOne({ email })
+  const { payload } = res.locals
+  let user = await User.findById(payload.id)
   let groceryLists = await GroceryList.find({ user: user._id })
   res.send(groceryLists)
 }
 
-const show = async (req, res) => {
-  let groceryList = await GroceryList.findById(req.params.groceryId).populate([
-    'recipes',
-    'ingredients.ingredient'
-  ])
-  res.send(groceryList)
-}
+// const show = async (req, res) => {
+//   let groceryList = await GroceryList.findById(req.params.groceryId).populate([
+//     'recipes',
+//     'ingredients.ingredient'
+//   ])
+//   res.send(groceryList)
+// }
 
 const create = async (req, res) => {
-  const { email } = req.body
-  let user = await User.findOne({ email })
+  const { payload } = res.locals
+  let user = await User.findById(payload.id)
   try {
     let groceryList = await GroceryList.create({ user: user._id })
     res.send(groceryList)
