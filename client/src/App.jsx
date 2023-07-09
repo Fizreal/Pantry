@@ -8,7 +8,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Recipes from './pages/Recipes'
-import RecipeDetail from './pages/RecipeDetails'
+import RecipeDetail from './pages/RecipeDetail'
 import Groceries from './pages/Groceries'
 import GroceryDetail from './pages/GroceryDetail'
 
@@ -34,9 +34,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <header>
-        <Nav user={user} handleLogOut={handleLogOut} />
-      </header>
+      <Nav user={user} handleLogOut={handleLogOut} />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
