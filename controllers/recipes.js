@@ -102,7 +102,6 @@ const deleteRecipe = async (req, res) => {
 
 module.exports = {
   index,
-  show,
   createRecipe,
   add: addIngredient,
   remove,

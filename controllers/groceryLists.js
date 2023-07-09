@@ -111,7 +111,6 @@ const finished = async (req, res) => {}
 
 module.exports = {
   index,
-  show,
   create,
   add: addRecipe,
   remove,
