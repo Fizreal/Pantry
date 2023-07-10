@@ -14,7 +14,7 @@ const index = async (req, res) => {
 }
 
 const search = async (req, res) => {
-  const { search } = req.body
+  const { search } = req.query
   let response = await axios.get(
     `${DOMAIN}/api/food-database/v2/parser?app_id=${APP_ID}&app_key=${API_KEY}&ingr=${search}`
   )
@@ -22,7 +22,7 @@ const search = async (req, res) => {
 }
 
 const suggestions = async (req, res) => {
-  const { search } = req.body
+  const { search } = req.query
   let response = await axios.get(
     `${DOMAIN}/auto-complete?app_id=${APP_ID}&app_key=${API_KEY}&q=${search}`
   )

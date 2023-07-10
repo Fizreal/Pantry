@@ -16,13 +16,6 @@ const index = async (req, res) => {
   res.send(recipes)
 }
 
-// const show = async (req, res) => {
-//   let recipe = await Recipe.findById(req.params.recipeId).populate(
-//     'ingredients.ingredient'
-//   )
-//   res.send(recipe)
-// }
-
 const createRecipe = async (req, res) => {
   try {
     const { name, category } = req.body

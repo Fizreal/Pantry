@@ -11,17 +11,12 @@ const Ingredient = require('../models/ingredient')
 const index = async (req, res) => {
   const { payload } = res.locals
   let user = await User.findById(payload.id)
-  let groceryLists = await GroceryList.find({ user: user._id })
+  let groceryLists = await GroceryList.find({ user: user._id }).populate([
+    'recipes',
+    'ingredients.ingredient'
+  ])
   res.send(groceryLists)
 }
-
-// const show = async (req, res) => {
-//   let groceryList = await GroceryList.findById(req.params.groceryId).populate([
-//     'recipes',
-//     'ingredients.ingredient'
-//   ])
-//   res.send(groceryList)
-// }
 
 const create = async (req, res) => {
   const { payload } = res.locals
@@ -96,7 +91,7 @@ const compile = async (req, res) => {
           ingredients.push(ingredientObj.ingredient.toString())
           groceryList.ingredients.push(ingredientObj)
         } else {
-          groceryList.ingredients[index].quantity += ingredientObj.quantity
+          parseFloat(groceryList.ingredients[index].quantity) += parseFloat(ingredientObj.quantity)
         }
       })
     })
