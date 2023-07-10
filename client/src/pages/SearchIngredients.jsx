@@ -11,8 +11,11 @@ const SearchIngredients = () => {
 
   const handleSubmit = async (e, search) => {
     e.preventDefault()
+    // let search = { search: e.target.search.value }
+    console.log(search)
     let results = await searchIngredients(search)
-    setSearchResults(results)
+    console.log(results)
+    setSearchResults(results.data)
   }
 
   return (

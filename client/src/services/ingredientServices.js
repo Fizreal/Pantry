@@ -11,7 +11,9 @@ export const getIngredients = async () => {
 
 export const searchIngredients = async (search) => {
   try {
+    console.log(search)
     const response = await Client.get('/ingredient/search', search)
+    console.log(response)
     return response
   } catch (error) {
     throw error
