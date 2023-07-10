@@ -50,7 +50,7 @@ const Register = () => {
           required
         />
         <input
-          type="text"
+          type="password"
           name="password"
           value={formValues.password}
           onChange={handleChange}
@@ -58,7 +58,7 @@ const Register = () => {
           required
         />
         <input
-          type="text"
+          type="password"
           name="passwordConfirm"
           value={formValues.passwordConfirm}
           onChange={handleChange}

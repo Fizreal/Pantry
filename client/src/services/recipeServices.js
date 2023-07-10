@@ -2,7 +2,7 @@ import Client from './api'
 
 export const getRecipes = async () => {
   try {
-    const response = Client.get('/recipe')
+    const response = await Client.get('/recipe')
     return response
   } catch (error) {
     throw error
@@ -11,8 +11,8 @@ export const getRecipes = async () => {
 
 export const createRecipe = async (data) => {
   try {
-    const response = Client.get('/recipe/create', data)
-    return response
+    const response = await Client.post('/recipe/create', data)
+    return response.data
   } catch (error) {
     throw error
   }
@@ -20,7 +20,7 @@ export const createRecipe = async (data) => {
 
 export const deleteRecipe = async (recipeId) => {
   try {
-    const response = Client.get(`/recipe/${recipeId}/delete`)
+    const response = await Client.delete(`/recipe/${recipeId}/delete`)
     return response
   } catch (error) {
     throw error
@@ -29,7 +29,7 @@ export const deleteRecipe = async (recipeId) => {
 
 export const addIngredient = async (recipeId, data) => {
   try {
-    const response = Client.get(`/recipe/${recipeId}/add`, data)
+    const response = await Client.put(`/recipe/${recipeId}/add`, data)
     return response
   } catch (error) {
     throw error
@@ -38,7 +38,9 @@ export const addIngredient = async (recipeId, data) => {
 
 export const removeIngredient = async (recipeId, ingredientId) => {
   try {
-    const response = Client.get(`/recipe/${recipeId}/remove/${ingredientId}`)
+    const response = await Client.put(
+      `/recipe/${recipeId}/remove/${ingredientId}`
+    )
     return response
   } catch (error) {
     throw error

@@ -2,7 +2,7 @@ import Client from './api'
 
 export const getGroceryLists = async () => {
   try {
-    const response = Client.get('/groceryList')
+    const response = await Client.get('/groceryList')
     return response
   } catch (error) {
     throw error
@@ -11,7 +11,7 @@ export const getGroceryLists = async () => {
 
 export const createGroceryList = async () => {
   try {
-    const response = Client.get('/groceryList/create')
+    const response = await Client.get('/groceryList/create')
     return response
   } catch (error) {
     throw error
@@ -20,7 +20,7 @@ export const createGroceryList = async () => {
 
 export const deleteRecipe = async (groceryId) => {
   try {
-    const response = Client.get(`/groceryList/${groceryIdId}/delete`)
+    const response = await Client.get(`/groceryList/${groceryIdId}/delete`)
     return response
   } catch (error) {
     throw error
@@ -29,7 +29,9 @@ export const deleteRecipe = async (groceryId) => {
 
 export const addRecipe = async (recipeId, data) => {
   try {
-    const response = Client.get(`/groceryList/${groceryId}/add/${recipeId}`)
+    const response = await Client.get(
+      `/groceryList/${groceryId}/add/${recipeId}`
+    )
     return response
   } catch (error) {
     throw error
@@ -38,7 +40,9 @@ export const addRecipe = async (recipeId, data) => {
 
 export const removeRecipe = async (groceryId, recipeId) => {
   try {
-    const response = Client.get(`/groceryList/${groceryId}/remove/${recipeId}`)
+    const response = await Client.get(
+      `/groceryList/${groceryId}/remove/${recipeId}`
+    )
     return response
   } catch (error) {
     throw error
@@ -47,7 +51,7 @@ export const removeRecipe = async (groceryId, recipeId) => {
 
 export const compileGroceries = async (groceryId) => {
   try {
-    const response = Client.get(`/groceryList/${groceryId}/compile`)
+    const response = await Client.get(`/groceryList/${groceryId}/compile`)
     return response
   } catch (error) {
     throw error

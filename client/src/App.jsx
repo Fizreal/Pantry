@@ -52,7 +52,7 @@ const App = () => {
           <Route path="/recipes" element={<Recipes recipes={recipes} />} />
           <Route
             path="/recipes/new"
-            element={<CreateRecipe setRecipes={setRecipes} />}
+            element={<CreateRecipe recipes={recipes} setRecipes={setRecipes} />}
           />
           <Route
             path="/recipes/:recipeId"

@@ -1,7 +1,7 @@
 import RecipeCard from '../components/RecipeCard'
 import { Link } from 'react-router-dom'
 
-const Recipes = ({ recipes, setRecipe }) => {
+const Recipes = ({ recipes }) => {
   return (
     <div>
       <h1>Your Recipes:</h1>

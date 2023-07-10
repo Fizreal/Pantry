@@ -29,7 +29,7 @@ const Login = ({ setUser }) => {
           required
         />
         <input
-          type="text"
+          type="password"
           name="password"
           value={formValues.password}
           onChange={handleChange}

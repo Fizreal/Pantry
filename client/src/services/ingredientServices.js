@@ -2,7 +2,7 @@ import Client from './api'
 
 export const getIngredients = async () => {
   try {
-    const response = Client.get('/ingredient')
+    const response = await Client.get('/ingredient')
     return response
   } catch (error) {
     throw error
@@ -11,7 +11,7 @@ export const getIngredients = async () => {
 
 export const searchIngredients = async (search) => {
   try {
-    const response = Client.get('/ingredient/search', search)
+    const response = await Client.get('/ingredient/search', search)
     return response
   } catch (error) {
     throw error
@@ -20,7 +20,7 @@ export const searchIngredients = async (search) => {
 
 export const searchSuggestions = async (search) => {
   try {
-    const response = Client.get('/ingredient/suggestions', search)
+    const response = await Client.get('/ingredient/suggestions', search)
     return response
   } catch (error) {
     throw error
