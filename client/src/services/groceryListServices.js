@@ -27,7 +27,7 @@ export const deleteRecipe = async (groceryId) => {
   }
 }
 
-export const addRecipe = async (recipeId, data) => {
+export const addRecipe = async (recipeId) => {
   try {
     const response = await Client.get(
       `/groceryList/${groceryId}/add/${recipeId}`

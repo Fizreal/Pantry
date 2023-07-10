@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { createRecipe } from '../services/recipeServices'
 import { useNavigate } from 'react-router-dom'
 
-const CreateRecipe = ({ recipes, setRecipes }) => {
+const CreateRecipe = ({ updateRecipes }) => {
   let navigate = useNavigate()
   const [formValues, setFormValues] = useState({ name: '', category: 'Dinner' })
 
@@ -12,8 +12,7 @@ const CreateRecipe = ({ recipes, setRecipes }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     let recipe = await createRecipe(formValues)
-    let updatedList = [...recipes]
-    setRecipes(updatedList.push(recipe))
+    updateRecipes()
     navigate(`/recipes/${recipe._id}`)
   }
 

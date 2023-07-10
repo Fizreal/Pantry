@@ -8,25 +8,38 @@ import SearchBar from '../components/SearchBar'
 
 const SearchIngredients = () => {
   const [searchResults, setSearchResults] = useState(null)
+  const [search, setSearch] = useState('')
 
-  const handleSubmit = async (e, search) => {
+  const handleChange = (e) => {
+    setSearch(e.target.value)
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // let search = { search: e.target.search.value }
+    let search = e.target.search.value
     console.log(search)
     let results = await searchIngredients(search)
-    console.log(results)
     setSearchResults(results.data)
   }
 
   return (
     <div>
-      <SearchBar handleSubmit={handleSubmit} />
+      <SearchBar
+        search={search}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+      />
       <div>
         <h1>Search Results</h1>
         {searchResults ? (
           <div>
             {searchResults.map((ingredient) => (
-              <IngredientCard key={ingredient.foodId} ingredient={ingredient} />
+              <IngredientCard
+                key={ingredient.food.foodId}
+                ingredient={ingredient}
+                setSearchResults={setSearchResults}
+                setSearch={setSearch}
+              />
             ))}
           </div>
         ) : null}

@@ -1,9 +1,13 @@
 import { useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { addIngredient } from '../services/recipeServices'
 
-const IngredientCard = ({ ingredient }) => {
+const IngredientCard = ({ ingredient, setSearchResults, setSearch }) => {
+  const { recipeId } = useParams()
+
   const [formValues, setFormValues] = useState({
-    name: ingredient.label,
-    edamanID: ingredient.foodId,
+    name: ingredient.food.label,
+    edamanID: ingredient.food.foodId,
     measure: '',
     quantity: 0
   })
@@ -12,9 +16,14 @@ const IngredientCard = ({ ingredient }) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
   }
 
-  handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log(formValues)
+    addIngredient(recipeId, formValues)
+    setSearchResults(null)
+    setSearch('')
   }
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -38,7 +47,9 @@ const IngredientCard = ({ ingredient }) => {
             Select unit measure
           </option>
           {ingredient.measures.map((measure) => (
-            <option value={measure.label}>{measure.label}</option>
+            <option key={measure.label} value={measure.label}>
+              {measure.label}
+            </option>
           ))}
         </select>
         <label htmlFor="measure">measure</label>
