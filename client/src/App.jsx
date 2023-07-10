@@ -48,6 +48,7 @@ const App = () => {
     }
     console.log('hit!')
     updateRecipes()
+    updateGroceries()
   }, [])
 
   return (

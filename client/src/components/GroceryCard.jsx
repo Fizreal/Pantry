@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 const GroceryCard = ({ groceryList }) => {
-  const date = groceryList.date.toJSON().slice(0, 10)
+  const date = groceryList.date.slice(0, 10)
 
   return (
     <Link to={`/groceries/${groceryList._id}`}>
