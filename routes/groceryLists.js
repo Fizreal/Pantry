@@ -8,7 +8,6 @@ router.get(
   middleware.verifyToken,
   groceryListCtrl.index
 )
-// router.get('/:groceryId', groceryListCtrl.show)
 router.post(
   '/create',
   middleware.stripToken,

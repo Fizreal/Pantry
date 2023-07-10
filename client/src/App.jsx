@@ -2,9 +2,13 @@ import './App.css'
 import './index.css'
 import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { CheckSession } from './services/Auth'
 import { getRecipes } from './services/recipeServices'
-import { getGroceryLists } from './services/groceryListServices'
+import {
+  getGroceryLists,
+  createGroceryList
+} from './services/groceryListServices'
 import Nav from './components/Nav'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -17,6 +21,7 @@ import Groceries from './pages/Groceries'
 import GroceryDetail from './pages/GroceryDetail'
 
 const App = () => {
+  let navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [recipes, setRecipes] = useState(null)
   const [groceries, setGroceries] = useState(null)
@@ -41,6 +46,13 @@ const App = () => {
     setGroceries(groceries.data)
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    let groceryList = await createGroceryList()
+    await updateGroceries()
+    navigate(`/groceries/${groceryList.data._id}`)
+  }
+
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
@@ -56,7 +68,7 @@ const App = () => {
       <Nav user={user} handleLogOut={handleLogOut} />
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home handleSubmit={handleSubmit} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           <Route path="/register" element={<Register />} />
           <Route path="/recipes" element={<Recipes recipes={recipes} />} />
@@ -75,10 +87,7 @@ const App = () => {
           <Route
             path="/groceries"
             element={
-              <Groceries
-                groceries={groceries}
-                updateGroceries={updateGroceries}
-              />
+              <Groceries groceries={groceries} handleSubmit={handleSubmit} />
             }
           />
           <Route

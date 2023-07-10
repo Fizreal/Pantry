@@ -29,6 +29,7 @@ const create = async (req, res) => {
     res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
   }
 }
+
 const addRecipe = async (req, res) => {
   let recipe = await Recipe.findById(req.params.recipeId)
   try {

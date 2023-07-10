@@ -3,7 +3,6 @@ const recipeCtrl = require('../controllers/recipes')
 const middleware = require('../middleware')
 
 router.get('/', middleware.stripToken, middleware.verifyToken, recipeCtrl.index)
-// router.get('/:recipeId', recipeCtrl.show)
 router.post(
   '/create',
   middleware.stripToken,
