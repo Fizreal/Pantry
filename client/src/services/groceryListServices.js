@@ -11,7 +11,7 @@ export const getGroceryLists = async () => {
 
 export const createGroceryList = async () => {
   try {
-    const response = await Client.get('/groceryList/create')
+    const response = await Client.post('/groceryList/create')
     return response
   } catch (error) {
     throw error
@@ -20,7 +20,7 @@ export const createGroceryList = async () => {
 
 export const deleteRecipe = async (groceryId) => {
   try {
-    const response = await Client.get(`/groceryList/${groceryIdId}/delete`)
+    const response = await Client.delete(`/groceryList/${groceryIdId}/delete`)
     return response
   } catch (error) {
     throw error
@@ -29,7 +29,7 @@ export const deleteRecipe = async (groceryId) => {
 
 export const addRecipe = async (recipeId) => {
   try {
-    const response = await Client.get(
+    const response = await Client.put(
       `/groceryList/${groceryId}/add/${recipeId}`
     )
     return response
@@ -40,7 +40,7 @@ export const addRecipe = async (recipeId) => {
 
 export const removeRecipe = async (groceryId, recipeId) => {
   try {
-    const response = await Client.get(
+    const response = await Client.put(
       `/groceryList/${groceryId}/remove/${recipeId}`
     )
     return response
@@ -51,7 +51,7 @@ export const removeRecipe = async (groceryId, recipeId) => {
 
 export const compileGroceries = async (groceryId) => {
   try {
-    const response = await Client.get(`/groceryList/${groceryId}/compile`)
+    const response = await Client.put(`/groceryList/${groceryId}/compile`)
     return response
   } catch (error) {
     throw error

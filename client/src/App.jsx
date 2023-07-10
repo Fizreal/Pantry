@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { CheckSession } from './services/Auth'
 import { getRecipes } from './services/recipeServices'
+import { getGroceryLists } from './services/groceryListServices'
 import Nav from './components/Nav'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -18,6 +19,7 @@ import GroceryDetail from './pages/GroceryDetail'
 const App = () => {
   const [user, setUser] = useState(null)
   const [recipes, setRecipes] = useState(null)
+  const [groceries, setGroceries] = useState(null)
 
   const handleLogOut = () => {
     setUser(null)
@@ -32,6 +34,11 @@ const App = () => {
   const updateRecipes = async () => {
     let recipes = await getRecipes()
     setRecipes(recipes.data)
+  }
+
+  const updateGroceries = async () => {
+    let groceries = await getGroceryLists()
+    setGroceries(groceries.data)
   }
 
   useEffect(() => {
@@ -64,8 +71,19 @@ const App = () => {
             path="/recipes/:recipeId/ingredients"
             element={<SearchIngredients />}
           />
-          <Route path="/groceries" element={<Groceries />} />
-          <Route path="/groceries/:groceryId" element={<GroceryDetail />} />
+          <Route
+            path="/groceries"
+            element={
+              <Groceries
+                groceries={groceries}
+                updateGroceries={updateGroceries}
+              />
+            }
+          />
+          <Route
+            path="/groceries/:groceryId"
+            element={<GroceryDetail groceries={groceries} />}
+          />
         </Routes>
       </main>
     </div>
