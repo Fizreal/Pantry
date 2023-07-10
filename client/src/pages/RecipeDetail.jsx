@@ -8,17 +8,26 @@ const RecipeDetail = ({ recipes }) => {
 
   useEffect(() => {
     const selectRecipe = () => {
-      let selectRecipe = recipes.find((recipe) => {
-        return recipe._id === recipeId
-      })
-      setRecipe(selectRecipe)
+      if (recipes) {
+        let selectRecipe = recipes.find((recipe) => {
+          return recipe._id === recipeId
+        })
+        setRecipe(selectRecipe)
+      }
     }
     selectRecipe()
-  }, [])
+  }, [recipes, recipeId])
 
   return (
     <div>
-      <h1>{recipe.name}</h1>
+      {recipe ? (
+        <div>
+          <h1>{recipe.name}</h1>
+          <p>{recipe.category}</p>
+        </div>
+      ) : (
+        <h1>Recipe not found</h1>
+      )}
     </div>
   )
 }

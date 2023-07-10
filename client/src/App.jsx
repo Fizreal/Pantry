@@ -11,6 +11,7 @@ import Register from './pages/Register'
 import Recipes from './pages/Recipes'
 import CreateRecipe from './pages/CreateRecipe'
 import RecipeDetail from './pages/RecipeDetail'
+import SearchIngredients from './pages/SearchIngredients'
 import Groceries from './pages/Groceries'
 import GroceryDetail from './pages/GroceryDetail'
 
@@ -38,6 +39,7 @@ const App = () => {
     if (token) {
       checkToken()
     }
+    console.log('hit!')
     updateRecipes()
   }, [])
 
@@ -57,6 +59,10 @@ const App = () => {
           <Route
             path="/recipes/:recipeId"
             element={<RecipeDetail recipes={recipes} />}
+          />
+          <Route
+            path="/recipes/:recipeId/ingredients"
+            element={<SearchIngredients />}
           />
           <Route path="/groceries" element={<Groceries />} />
           <Route path="/groceries/:groceryId" element={<GroceryDetail />} />

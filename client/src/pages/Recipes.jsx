@@ -9,9 +9,13 @@ const Recipes = ({ recipes }) => {
         <button>New recipe</button>
       </Link>
       <div>
-        {recipes.map((recipe) => (
-          <RecipeCard key={recipe._id} recipe={recipe} />
-        ))}
+        {recipes ? (
+          recipes.map((recipe) => (
+            <RecipeCard key={recipe._id} recipe={recipe} />
+          ))
+        ) : (
+          <p>No recipes</p>
+        )}
       </div>
     </div>
   )
