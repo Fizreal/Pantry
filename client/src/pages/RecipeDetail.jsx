@@ -18,20 +18,29 @@ const RecipeDetail = ({ recipes }) => {
     selectRecipe()
   }, [recipes, recipeId])
 
-  return (
-    <div>
-      {recipe ? (
-        <div>
-          <h1>{recipe.name}</h1>
-          <p>{recipe.category}</p>
-          <Link to={`/recipes/${recipe._id}/ingredients`}>
-            <button>Add Ingredients</button>
-          </Link>
-        </div>
-      ) : (
-        <h1>Recipe not found</h1>
-      )}
-    </div>
+  return recipe ? (
+    <section name="recipe" className="flex flex-col items-center w-80">
+      <h1 className="text-xl m-2">{recipe.name}</h1>
+      <p>{recipe.category}</p>
+      <section name="ingredients" className="flex flex-col w-80">
+        <h2 className="text-lg m-2 self-center">Ingredients</h2>
+        <ul>
+          {recipe.ingredients.map((ingr) => (
+            <li key={ingr.ingredient._id}>
+              {ingr.quantity.$numberdecimal}
+              {ingr.ingredient.measure} of {ingr.ingredient.name}
+            </li>
+          ))}
+        </ul>
+        <Link to={`/recipes/${recipe._id}/ingredients`} className="self-center">
+          <button className="p-2 border rounded-xl">Add</button>
+        </Link>
+      </section>
+    </section>
+  ) : (
+    <section name="recipe" className="flex flex-col items-center w-80">
+      <h1 className="text-xl m-2">Recipe not found</h1>
+    </section>
   )
 }
 
