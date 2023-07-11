@@ -23,14 +23,14 @@ const SearchIngredients = () => {
   }
 
   return (
-    <div>
+    <section name="search ingredient" className="flex flex-col items-center">
       <SearchBar
         search={search}
         handleSubmit={handleSubmit}
         handleChange={handleChange}
       />
-      <div>
-        <h1>Search Results</h1>
+      <div className="m-3">
+        <h1 className="text-xl">Search Results</h1>
         {searchResults ? (
           <div>
             {searchResults.map((ingredient) => (
@@ -44,7 +44,7 @@ const SearchIngredients = () => {
           </div>
         ) : null}
       </div>
-    </div>
+    </section>
   )
 }
 

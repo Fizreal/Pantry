@@ -21,7 +21,8 @@ const RecipeDetail = ({ recipes }) => {
   return recipe ? (
     <section name="recipe" className="flex flex-col items-center w-80">
       <h1 className="text-xl m-2">{recipe.name}</h1>
-      <p>{recipe.category}</p>
+      <p>Category: {recipe.category}</p>
+      <p>Description: {recipe.description}</p>
       <section name="ingredients" className="flex flex-col w-80">
         <h2 className="text-lg m-2 self-center">Ingredients</h2>
         <ul>

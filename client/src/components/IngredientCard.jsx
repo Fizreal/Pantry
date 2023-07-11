@@ -18,42 +18,51 @@ const IngredientCard = ({ ingredient, setSearchResults, setSearch }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(formValues)
-    addIngredient(recipeId, formValues)
+    await addIngredient(recipeId, formValues)
     setSearchResults(null)
     setSearch('')
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="number"
-          name="quantity"
-          id="quantity"
-          step=".1"
-          value={formValues.quantity}
-          min="0"
-          onChange={handleChange}
-        />
-        <label htmlFor="quantity">quantity</label>
-        <select
-          name="measure"
-          id="measure"
-          onChange={handleChange}
-          defaultValue={''}
-        >
-          <option value="" disabled>
-            Select unit measure
-          </option>
-          {ingredient.measures.map((measure) => (
-            <option key={measure.label} value={measure.label}>
-              {measure.label}
-            </option>
-          ))}
-        </select>
-        <label htmlFor="measure">measure</label>
-        <button>Add to recipe</button>
+    <div className="flex flex-col p-2 w-80 border m-2 rounded-lg">
+      <h3 className="self-center text-lg">{ingredient.food.label}</h3>
+      <form onSubmit={handleSubmit} className="flex flex-col">
+        <div className="my-3">
+          <div>
+            {' '}
+            <label htmlFor="quantity">Quantity:</label>
+            <input
+              type="number"
+              name="quantity"
+              id="quantity"
+              step=".1"
+              value={formValues.quantity}
+              min="0"
+              onChange={handleChange}
+              className="w-10 text-center"
+            />
+          </div>
+          <div>
+            {' '}
+            <label htmlFor="measure">Measure:</label>
+            <select
+              name="measure"
+              id="measure"
+              onChange={handleChange}
+              defaultValue={''}
+            >
+              <option value="" disabled>
+                Select unit measure
+              </option>
+              {ingredient.measures.map((measure) => (
+                <option key={measure.label} value={measure.label}>
+                  {measure.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <button className="p-1.5 self-center border rounded-xl">Add</button>
       </form>
     </div>
   )

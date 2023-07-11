@@ -18,10 +18,15 @@ const index = async (req, res) => {
 
 const createRecipe = async (req, res) => {
   try {
-    const { name, category } = req.body
+    const { name, description, category } = req.body
     const { payload } = res.locals
     let user = await User.findById(payload.id)
-    let recipe = await Recipe.create({ user: user._id, name, category })
+    let recipe = await Recipe.create({
+      user: user._id,
+      name,
+      description,
+      category
+    })
     res.send(recipe)
   } catch (error) {
     console.log(error)
