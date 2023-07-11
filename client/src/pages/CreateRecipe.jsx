@@ -4,7 +4,11 @@ import { useNavigate } from 'react-router-dom'
 
 const CreateRecipe = ({ updateRecipes }) => {
   let navigate = useNavigate()
-  const [formValues, setFormValues] = useState({ name: '', category: 'Dinner' })
+  const [formValues, setFormValues] = useState({
+    name: '',
+    description: '',
+    category: 'Meal'
+  })
 
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
@@ -17,32 +21,48 @@ const CreateRecipe = ({ updateRecipes }) => {
   }
 
   return (
-    <div>
+    <section name="new recipe">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={formValues.name}
-          onChange={handleChange}
-          required
-        />
-        <label htmlFor="category">Category:</label>
-        <select
-          name="category"
-          id="category"
-          onChange={handleChange}
-          defaultValue={'meal'}
-          required
-        >
-          <option value="meal">Meal</option>
-          <option value="appetizer">Appetizer</option>
-          <option value="dessert">Dessert</option>
-        </select>
+        <div>
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value={formValues.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="description">Description:</label>
+          <input
+            type="text"
+            name="description"
+            id="description"
+            value={formValues.description}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="category">Category:</label>
+          <select
+            name="category"
+            id="category"
+            onChange={handleChange}
+            defaultValue={'meal'}
+            required
+          >
+            <option value="Meal">Meal</option>
+            <option value="Snack">Snack</option>
+            <option value="Appetizer">Appetizer</option>
+            <option value="Dessert">Dessert</option>
+          </select>
+        </div>
         <button>Create</button>
       </form>
-    </div>
+    </section>
   )
 }
 

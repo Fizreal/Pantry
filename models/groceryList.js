@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-// const Double = require('@mongoosejs/double')
 
 const Schema = mongoose.Schema
 
@@ -10,7 +9,7 @@ const groceryListSchema = new Schema(
     ingredients: [
       {
         ingredient: { type: Schema.Types.ObjectId, ref: 'Ingredient' },
-        quantity: { type: mongoose.Types.Decimal128 }
+        quantity: { type: String }
       }
     ],
     date: { type: Date, default: new Date() },

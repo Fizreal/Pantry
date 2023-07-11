@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-// const Double = require('@mongoosejs/double')
 
 const Schema = mongoose.Schema
 
@@ -7,6 +6,7 @@ const recipeSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
+    description: String,
     ingredients: [
       {
         ingredient: {
@@ -14,13 +14,13 @@ const recipeSchema = new Schema(
           ref: 'Ingredient',
           required: true
         },
-        quantity: { type: mongoose.Types.Decimal128, required: true }
+        quantity: { type: String, required: true }
       }
     ],
     category: {
       type: String,
       required: true,
-      enum: ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Dessert']
+      enum: ['Meal', 'Snack', 'Appetizer', 'Dessert']
     }
   },
   { timestamps: true }
