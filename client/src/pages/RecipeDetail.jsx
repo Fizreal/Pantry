@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { removeIngredient } from '../services/recipeServices'
 
-const RecipeDetail = ({ recipes }) => {
+const RecipeDetail = ({ recipes, setRecipes, updateRecipes }) => {
   const [recipe, setRecipe] = useState(null)
 
   const { recipeId } = useParams()
@@ -14,9 +15,26 @@ const RecipeDetail = ({ recipes }) => {
         })
         setRecipe(selectRecipe)
       }
+      console.log('triggers use effect')
     }
     selectRecipe()
   }, [recipes, recipeId])
+
+  const updateRecipe = async (ingredientId) => {
+    await removeIngredient(recipeId, ingredientId)
+    let recipeIdx = recipes.map((recipe) => recipe._id).indexOf(recipeId)
+    let ingredientIdx = recipe.ingredients
+      .map((ingr) => ingr.ingredient._id)
+      .indexOf(ingredientId)
+    let updatedRecipes = [...recipes]
+    updatedRecipes[recipeIdx].ingredients.splice(ingredientIdx, 1)
+    setRecipes(updatedRecipes)
+  }
+
+  const handleSubmit = async (e, ingredientId) => {
+    e.preventDefault()
+    await updateRecipe(ingredientId)
+  }
 
   return recipe ? (
     <section name="recipe" className="flex flex-col items-center w-80">
@@ -25,13 +43,26 @@ const RecipeDetail = ({ recipes }) => {
       <p>Description: {recipe.description}</p>
       <section name="ingredients" className="flex flex-col w-80">
         <h2 className="text-lg m-2 self-center">Ingredients</h2>
-        <ul>
-          {recipe.ingredients.map((ingr) => (
-            <li key={ingr.ingredient._id}>
-              {ingr.quantity} {ingr.ingredient.measure} {ingr.ingredient.name}
-            </li>
-          ))}
-        </ul>
+        <table>
+          <tbody>
+            {recipe.ingredients.map((ingr) => (
+              <tr key={ingr.ingredient._id} className="w-80">
+                <td>
+                  {ingr.quantity} {ingr.ingredient.measure}{' '}
+                  {ingr.ingredient.name}
+                </td>
+                <td className="flex justify-center items-center">
+                  <form
+                    onSubmit={(e) => handleSubmit(e, ingr.ingredient._id)}
+                    className="justify-center items-center"
+                  >
+                    <button>X</button>
+                  </form>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         <Link to={`/recipes/${recipe._id}/ingredients`} className="self-center">
           <button className="p-2 border rounded-xl">Add</button>
         </Link>

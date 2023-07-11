@@ -6,7 +6,7 @@ import { useState } from 'react'
 import IngredientCard from '../components/IngredientCard'
 import SearchBar from '../components/SearchBar'
 
-const SearchIngredients = () => {
+const SearchIngredients = ({ recipes, setRecipes }) => {
   const [searchResults, setSearchResults] = useState(null)
   const [search, setSearch] = useState('')
 

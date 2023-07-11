@@ -78,11 +78,17 @@ const App = () => {
           />
           <Route
             path="/recipes/:recipeId"
-            element={<RecipeDetail recipes={recipes} />}
+            element={<RecipeDetail recipes={recipes} setRecipes={setRecipes} />}
           />
           <Route
             path="/recipes/:recipeId/ingredients"
-            element={<SearchIngredients />}
+            element={
+              <SearchIngredients
+                recipes={recipes}
+                setRecipes={setRecipes}
+                updateRecipes={updateRecipes}
+              />
+            }
           />
           <Route
             path="/groceries"
