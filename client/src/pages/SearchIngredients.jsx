@@ -6,7 +6,7 @@ import { useState } from 'react'
 import IngredientCard from '../components/IngredientCard'
 import SearchBar from '../components/SearchBar'
 
-const SearchIngredients = ({ recipes, setRecipes }) => {
+const SearchIngredients = ({ updateRecipes }) => {
   const [searchResults, setSearchResults] = useState(null)
   const [search, setSearch] = useState('')
 
@@ -17,7 +17,6 @@ const SearchIngredients = ({ recipes, setRecipes }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     let search = e.target.search.value
-    console.log(search)
     let results = await searchIngredients(search)
     setSearchResults(results.data)
   }
@@ -39,6 +38,7 @@ const SearchIngredients = ({ recipes, setRecipes }) => {
                 ingredient={ingredient}
                 setSearchResults={setSearchResults}
                 setSearch={setSearch}
+                updateRecipes={updateRecipes}
               />
             ))}
           </div>

@@ -16,7 +16,7 @@ const CreateRecipe = ({ updateRecipes }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     let recipe = await createRecipe(formValues)
-    await updateRecipes()
+    updateRecipes()
     navigate(`/recipes/${recipe._id}`)
   }
 

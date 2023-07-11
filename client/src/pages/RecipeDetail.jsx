@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { removeIngredient } from '../services/recipeServices'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { removeIngredient, deleteRecipe } from '../services/recipeServices'
 
-const RecipeDetail = ({ recipes, setRecipes, updateRecipes }) => {
+const RecipeDetail = ({ recipes, updateRecipes }) => {
+  let navigate = useNavigate()
   const [recipe, setRecipe] = useState(null)
 
   const { recipeId } = useParams()
@@ -15,25 +16,21 @@ const RecipeDetail = ({ recipes, setRecipes, updateRecipes }) => {
         })
         setRecipe(selectRecipe)
       }
-      console.log('triggers use effect')
     }
     selectRecipe()
   }, [recipes, recipeId])
 
-  const updateRecipe = async (ingredientId) => {
+  const handleRemove = async (e, ingredientId) => {
+    e.preventDefault()
     await removeIngredient(recipeId, ingredientId)
-    let recipeIdx = recipes.map((recipe) => recipe._id).indexOf(recipeId)
-    let ingredientIdx = recipe.ingredients
-      .map((ingr) => ingr.ingredient._id)
-      .indexOf(ingredientId)
-    let updatedRecipes = [...recipes]
-    updatedRecipes[recipeIdx].ingredients.splice(ingredientIdx, 1)
-    setRecipes(updatedRecipes)
+    updateRecipes()
   }
 
-  const handleSubmit = async (e, ingredientId) => {
+  const handleDelete = async (e) => {
     e.preventDefault()
-    await updateRecipe(ingredientId)
+    deleteRecipe(recipeId)
+    updateRecipes()
+    navigate('/recipes')
   }
 
   return recipe ? (
@@ -53,7 +50,7 @@ const RecipeDetail = ({ recipes, setRecipes, updateRecipes }) => {
                 </td>
                 <td className="flex justify-center items-center">
                   <form
-                    onSubmit={(e) => handleSubmit(e, ingr.ingredient._id)}
+                    onSubmit={(e) => handleRemove(e, ingr.ingredient._id)}
                     className="justify-center items-center"
                   >
                     <button>X</button>
@@ -67,6 +64,9 @@ const RecipeDetail = ({ recipes, setRecipes, updateRecipes }) => {
           <button className="p-2 border rounded-xl">Add</button>
         </Link>
       </section>
+      <form onSubmit={handleDelete}>
+        <button>Delete recipe</button>
+      </form>
     </section>
   ) : (
     <section name="recipe" className="flex flex-col items-center w-80">

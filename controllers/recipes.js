@@ -92,7 +92,7 @@ const deleteRecipe = async (req, res) => {
   try {
     await Recipe.findByIdAndDelete(req.params.recipeId)
     res.send('Success')
-  } catch (err) {
+  } catch (error) {
     console.log(error)
     res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
   }

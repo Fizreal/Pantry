@@ -78,7 +78,9 @@ const App = () => {
           />
           <Route
             path="/recipes/:recipeId"
-            element={<RecipeDetail recipes={recipes} setRecipes={setRecipes} />}
+            element={
+              <RecipeDetail recipes={recipes} updateRecipes={updateRecipes} />
+            }
           />
           <Route
             path="/recipes/:recipeId/ingredients"
