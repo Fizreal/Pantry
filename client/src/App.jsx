@@ -66,7 +66,7 @@ const App = () => {
   return (
     <div className="App">
       <Nav user={user} handleLogOut={handleLogOut} />
-      <main>
+      <main className="min-h-screen flex flex-col items-center">
         <Routes>
           <Route path="/" element={<Home handleSubmit={handleSubmit} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />

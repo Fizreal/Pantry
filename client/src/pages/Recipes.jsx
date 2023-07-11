@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 
 const Recipes = ({ recipes }) => {
   return (
-    <div>
-      <h1>Your Recipes:</h1>
-      <Link to="/recipes/new">
-        <button>New recipe</button>
+    <section name="recipes" className="flex flex-col items-center w-80">
+      <Link to="/recipes/new" className="m-2">
+        <button className="p-2 border rounded-xl">New recipe</button>
       </Link>
+      <h1 className="text-xl m-2">Your Recipes:</h1>
       <div>
         {recipes ? (
           recipes.map((recipe) => (
@@ -17,7 +17,7 @@ const Recipes = ({ recipes }) => {
           <p>No recipes</p>
         )}
       </div>
-    </div>
+    </section>
   )
 }
 
