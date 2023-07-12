@@ -9,7 +9,7 @@ const Recipes = ({ recipes }) => {
       </Link>
       <h1 className="text-xl m-2">Your Recipes:</h1>
       <div>
-        {recipes ? (
+        {recipes.length ? (
           recipes.map((recipe) => (
             <RecipeListCard key={recipe._id} recipe={recipe} />
           ))

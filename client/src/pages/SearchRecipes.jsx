@@ -3,13 +3,14 @@ import { useParams } from 'react-router-dom'
 import RecipeCard from '../components/RecipeCard'
 import { addRecipe } from '../services/groceryListServices'
 
-const SearchRecipes = ({ recipes, updateGroceries }) => {
+const SearchRecipes = ({ recipes, groceries, updateGroceries }) => {
   const [filter, setFilter] = useState([
     'Meal',
     'Snack',
     'Appetizer',
     'Dessert'
   ])
+  const [availableRecipes, setAvailableRecipes] = useState([])
 
   const { groceryId } = useParams()
 
@@ -27,6 +28,23 @@ const SearchRecipes = ({ recipes, updateGroceries }) => {
     await addRecipe(groceryId, recipeId)
     updateGroceries()
   }
+
+  useEffect(() => {
+    const filterRecipes = () => {
+      if (groceries) {
+        let groceryList = groceries.find(
+          (groceryList) => groceryList._id === groceryId
+        )
+        let includedRecipes = groceryList.recipes.map((recipe) => recipe._id)
+        console.log(includedRecipes)
+        let filteredRecipes = recipes.filter(
+          (recipe) => !includedRecipes.includes(recipe._id)
+        )
+        setAvailableRecipes(filteredRecipes)
+      }
+    }
+    filterRecipes()
+  }, [groceries])
 
   return (
     <section>
@@ -47,17 +65,19 @@ const SearchRecipes = ({ recipes, updateGroceries }) => {
         </select>
       </div>
       <div>
-        {recipes
-          ? recipes
-              .filter((recipe) => filter.includes(recipe.category))
-              .map((recipe) => (
-                <RecipeCard
-                  key={recipe._id}
-                  recipe={recipe}
-                  handleSubmit={handleSubmit}
-                />
-              ))
-          : null}
+        {availableRecipes.length ? (
+          availableRecipes
+            .filter((recipe) => filter.includes(recipe.category))
+            .map((recipe) => (
+              <RecipeCard
+                key={recipe._id}
+                recipe={recipe}
+                handleSubmit={handleSubmit}
+              />
+            ))
+        ) : (
+          <h2>No recipes available</h2>
+        )}
       </div>
     </section>
   )

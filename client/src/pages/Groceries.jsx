@@ -8,7 +8,7 @@ const Groceries = ({ groceries, handleSubmit }) => {
       </form>
       <h1 className="text-xl m-2">Grocery Lists:</h1>
       <div>
-        {groceries ? (
+        {groceries.length ? (
           groceries.map((list) => (
             <GroceryListCard key={list._id} groceryList={list} />
           ))

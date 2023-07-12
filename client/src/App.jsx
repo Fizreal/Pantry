@@ -113,6 +113,7 @@ const App = () => {
             element={
               <SearchRecipes
                 recipes={recipes}
+                groceries={groceries}
                 updateGroceries={updateGroceries}
               />
             }

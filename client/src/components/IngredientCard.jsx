@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { addIngredient } from '../services/recipeServices'
 
@@ -14,8 +14,9 @@ const IngredientCard = ({
     name: ingredient.food.label,
     edamanID: ingredient.food.foodId,
     measure: '',
-    quantity: 0
+    quantity: '0'
   })
+  const [disabled, setDisabled] = useState(true)
 
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
@@ -28,6 +29,12 @@ const IngredientCard = ({
     setSearchResults(null)
     setSearch('')
   }
+
+  useEffect(() => {
+    let checkDisabled =
+      formValues.measure && formValues.quantity !== '0' ? false : true
+    setDisabled(checkDisabled)
+  }, [formValues])
 
   return (
     <div className="flex flex-col p-2 w-80 border m-2 rounded-lg">
@@ -55,7 +62,7 @@ const IngredientCard = ({
               name="measure"
               id="measure"
               onChange={handleChange}
-              defaultValue={''}
+              value={formValues.measure}
             >
               <option value="" disabled>
                 Select unit measure
@@ -68,7 +75,12 @@ const IngredientCard = ({
             </select>
           </div>
         </div>
-        <button className="p-1.5 self-center border rounded-xl">Add</button>
+        <button
+          className="p-1.5 self-center border rounded-xl"
+          disabled={disabled}
+        >
+          Add
+        </button>
       </form>
     </div>
   )
