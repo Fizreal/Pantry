@@ -20,7 +20,7 @@ export const createGroceryList = async () => {
 
 export const deleteGroceryList = async (groceryId) => {
   try {
-    const response = await Client.delete(`/groceryList/${groceryId}/delete`)
+    const response = await Client.delete(`/groceryList/${groceryId}`)
     return response
   } catch (error) {
     throw error

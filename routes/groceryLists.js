@@ -27,7 +27,7 @@ router.put(
   groceryListCtrl.remove
 )
 router.delete(
-  '/:groceryId/delete',
+  '/:groceryId',
   middleware.stripToken,
   middleware.verifyToken,
   groceryListCtrl.delete

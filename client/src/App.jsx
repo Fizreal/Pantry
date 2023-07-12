@@ -100,7 +100,12 @@ const App = () => {
           />
           <Route
             path="/groceries/:groceryId"
-            element={<GroceryDetail groceries={groceries} />}
+            element={
+              <GroceryDetail
+                groceries={groceries}
+                updateGroceries={updateGroceries}
+              />
+            }
           />
         </Routes>
       </main>
