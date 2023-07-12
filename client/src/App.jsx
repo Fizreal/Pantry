@@ -70,7 +70,16 @@ const App = () => {
       <main className="min-h-screen flex flex-col items-center">
         <Routes>
           <Route path="/" element={<Home handleSubmit={handleSubmit} />} />
-          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route
+            path="/login"
+            element={
+              <Login
+                setUser={setUser}
+                updateRecipes={updateRecipes}
+                updateGroceries={updateGroceries}
+              />
+            }
+          />
           <Route path="/register" element={<Register />} />
           <Route path="/recipes" element={<Recipes recipes={recipes} />} />
           <Route

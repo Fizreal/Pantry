@@ -2,20 +2,28 @@ import { useState } from 'react'
 import { SignInUser } from '../services/Auth'
 import { useNavigate } from 'react-router-dom'
 
-const Login = ({ setUser }) => {
+const Login = ({ setUser, updateRecipes, updateGroceries }) => {
   let navigate = useNavigate()
   const [formValues, setFormValues] = useState({ email: '', password: '' })
+  const [errorMessage, setErrorMessage] = useState('')
 
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const payload = await SignInUser(formValues)
-    setFormValues({ email: '', password: '' })
-    setUser(payload)
-    navigate('/')
+    try {
+      e.preventDefault()
+      const payload = await SignInUser(formValues)
+      setFormValues({ email: '', password: '' })
+      setUser(payload)
+      updateRecipes()
+      updateGroceries()
+      navigate('/')
+    } catch (error) {
+      setFormValues({ email: '', password: '' })
+      setErrorMessage(error.response.data)
+    }
   }
   return (
     <div className="w-full max-w-xs">
@@ -44,7 +52,7 @@ const Login = ({ setUser }) => {
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
           />
-          <p className="text-red-500 text-xs italic">Error message</p>
+          <p className="text-red-500 text-xs italic">{errorMessage}</p>
         </div>
         <div className="flex items-center justify-center">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

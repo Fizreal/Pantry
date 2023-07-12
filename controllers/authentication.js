@@ -9,7 +9,7 @@ const Register = async (req, res) => {
     if (existingUser) {
       return res
         .status(400)
-        .send('A user with that email has already been registered!')
+        .send('That email is already registered to an account')
     } else {
       const user = await User.create({ name, email, passwordDigest })
       res.send(user)
@@ -23,22 +23,27 @@ const Login = async (req, res) => {
   try {
     const { email, password } = req.body
     const user = await User.findOne({ email })
-    let matched = await middleware.comparePassword(
-      user.passwordDigest,
-      password
-    )
-    if (matched) {
-      let payload = {
-        id: user.id,
-        email: user.email
+    if (user) {
+      let matched = await middleware.comparePassword(
+        user.passwordDigest,
+        password
+      )
+      if (matched) {
+        let payload = {
+          id: user.id,
+          email: user.email
+        }
+        let token = middleware.createToken(payload)
+        return res.send({ user: payload, token })
       }
-      let token = middleware.createToken(payload)
-      return res.send({ user: payload, token })
+      return res
+        .status(400)
+        .send('Invalid email or password. Please try again.')
     }
-    res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
+    res.status(400).send('Invalid email or password. Please try again.')
   } catch (error) {
     console.log(error)
-    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred' })
   }
 }
 
