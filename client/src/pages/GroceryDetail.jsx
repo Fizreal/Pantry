@@ -26,7 +26,7 @@ const GroceryDetail = ({ groceries, updateGroceries }) => {
   const handleRemove = async (e, recipeId) => {
     e.preventDefault()
     await removeRecipe(groceryId, recipeId)
-    updateRecipes()
+    updateGroceries()
   }
 
   const handleDelete = async (e) => {
@@ -41,19 +41,24 @@ const GroceryDetail = ({ groceries, updateGroceries }) => {
       <h1 className="text-xl m-2">{groceryList.date.slice(0, 10)}</h1>
       <p>Status: {groceryList.finished ? 'Complete' : 'Open'}</p>
       <p></p>
-      <section name="ingredients" className="flex flex-col w-80">
-        {/* <h2 className="text-lg m-2 self-center">Ingredients</h2>
+      <section name="recipes" className="flex flex-col w-80">
+        <h2 className="text-lg m-2 self-center">Recipes</h2>
         <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th></th>
+            </tr>
+          </thead>
           <tbody>
-            {recipe.ingredients.map((ingr) => (
-              <tr key={ingr.ingredient._id} className="w-80">
-                <td>
-                  {ingr.quantity} {ingr.ingredient.measure}{' '}
-                  {ingr.ingredient.name}
-                </td>
+            {groceryList.recipes.map((recipe) => (
+              <tr key={recipe._id} className="w-80">
+                <td>{recipe.name}</td>
+                <td>{recipe.category}</td>
                 <td className="flex justify-center items-center">
                   <form
-                    onSubmit={(e) => handleRemove(e, ingr.ingredient._id)}
+                    onSubmit={(e) => handleRemove(e, recipe._id)}
                     className="justify-center items-center"
                   >
                     <button>X</button>
@@ -63,9 +68,12 @@ const GroceryDetail = ({ groceries, updateGroceries }) => {
             ))}
           </tbody>
         </table>
-        <Link to={`/groceries/${groceryList._id}/ingredients`} className="self-center">
+        <Link
+          to={`/groceries/${groceryList._id}/recipes`}
+          className="self-center"
+        >
           <button className="p-2 border rounded-xl">Add</button>
-        </Link> */}
+        </Link>
       </section>
       <form onSubmit={handleDelete}>
         <button>Delete grocery list</button>

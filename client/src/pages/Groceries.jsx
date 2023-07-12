@@ -1,4 +1,4 @@
-import GroceryCard from '../components/GroceryCard'
+import GroceryListCard from '../components/GroceryListCard'
 
 const Groceries = ({ groceries, handleSubmit }) => {
   return (
@@ -10,7 +10,7 @@ const Groceries = ({ groceries, handleSubmit }) => {
       <div>
         {groceries ? (
           groceries.map((list) => (
-            <GroceryCard key={list._id} groceryList={list} />
+            <GroceryListCard key={list._id} groceryList={list} />
           ))
         ) : (
           <p>No grocery lists</p>

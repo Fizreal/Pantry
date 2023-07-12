@@ -19,6 +19,7 @@ import RecipeDetail from './pages/RecipeDetail'
 import SearchIngredients from './pages/SearchIngredients'
 import Groceries from './pages/Groceries'
 import GroceryDetail from './pages/GroceryDetail'
+import SearchRecipes from './pages/SearchRecipes'
 
 const App = () => {
   let navigate = useNavigate()
@@ -103,6 +104,15 @@ const App = () => {
             element={
               <GroceryDetail
                 groceries={groceries}
+                updateGroceries={updateGroceries}
+              />
+            }
+          />
+          <Route
+            path="/groceries/:groceryId/recipes"
+            element={
+              <SearchRecipes
+                recipes={recipes}
                 updateGroceries={updateGroceries}
               />
             }

@@ -1,4 +1,4 @@
-import RecipeCard from '../components/RecipeCard'
+import RecipeListCard from '../components/RecipeListCard'
 import { Link } from 'react-router-dom'
 
 const Recipes = ({ recipes }) => {
@@ -11,7 +11,7 @@ const Recipes = ({ recipes }) => {
       <div>
         {recipes ? (
           recipes.map((recipe) => (
-            <RecipeCard key={recipe._id} recipe={recipe} />
+            <RecipeListCard key={recipe._id} recipe={recipe} />
           ))
         ) : (
           <p>No recipes</p>
