@@ -18,16 +18,16 @@ export const createGroceryList = async () => {
   }
 }
 
-export const deleteRecipe = async (groceryId) => {
+export const deleteGroceryList = async (groceryId) => {
   try {
-    const response = await Client.delete(`/groceryList/${groceryIdId}/delete`)
+    const response = await Client.delete(`/groceryList/${groceryId}/delete`)
     return response
   } catch (error) {
     throw error
   }
 }
 
-export const addRecipe = async (recipeId) => {
+export const addRecipe = async (groceryId, recipeId) => {
   try {
     const response = await Client.put(
       `/groceryList/${groceryId}/add/${recipeId}`
