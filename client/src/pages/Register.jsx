@@ -16,7 +16,7 @@ const Register = () => {
 
   const handleChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value })
-    setCheckErrors(!checkErrors)
+    setCheckErrors((prev) => !prev)
   }
 
   const handleSubmit = async (e) => {

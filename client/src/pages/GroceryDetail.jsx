@@ -9,6 +9,7 @@ import {
 const GroceryDetail = ({ groceries, updateGroceries, user }) => {
   let navigate = useNavigate()
   const [groceryList, setGroceryList] = useState(null)
+  const [showModal, setShowModal] = useState(false)
 
   const { groceryId } = useParams()
 
@@ -23,6 +24,10 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
     }
     selectGroceryList()
   }, [groceries, groceryId])
+
+  const toggleModal = () => {
+    setShowModal((prev) => !prev)
+  }
 
   const handleRemove = async (e, recipeId) => {
     e.preventDefault()
@@ -114,11 +119,34 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
             </button>
           </Link>
         </section>
-        <form onSubmit={handleDelete}>
-          <button className="my-2 py-1 px-2 border rounded-xl">
-            Delete grocery list
-          </button>
-        </form>
+        <button
+          className="my-2 py-1 px-2 border rounded-xl"
+          onClick={toggleModal}
+        >
+          Delete grocery list
+        </button>
+        <div
+          className={
+            showModal
+              ? 'block w-full h-full fixed top-0 left-0 z-10 overflow-auto bg-black/60'
+              : 'hidden'
+          }
+        >
+          <div className="border mx-auto my-32 p-5 bg-white w-4/5 rounded-lg">
+            <h3>Are you sure you want to delete this grocery list?</h3>
+            <form onSubmit={handleDelete}>
+              <button className="my-2 py-1 px-2 border rounded-xl">
+                Delete
+              </button>
+            </form>
+            <button
+              className="my-2 py-1 px-2 border rounded-xl"
+              onClick={toggleModal}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
       </section>
     ) : (
       <section name="recipe" className="flex flex-col items-center w-80">

@@ -5,8 +5,13 @@ import { removeIngredient, deleteRecipe } from '../services/recipeServices'
 const RecipeDetail = ({ recipes, updateRecipes, user }) => {
   let navigate = useNavigate()
   const [recipe, setRecipe] = useState(null)
+  const [showModal, setShowModal] = useState(false)
 
   const { recipeId } = useParams()
+
+  const toggleModal = () => {
+    setShowModal((prev) => !prev)
+  }
 
   useEffect(() => {
     const selectRecipe = () => {
@@ -79,11 +84,34 @@ const RecipeDetail = ({ recipes, updateRecipes, user }) => {
             </button>
           </Link>
         </section>
-        <form onSubmit={handleDelete}>
-          <button className="my-2 py-1 px-2 border rounded-xl">
-            Delete recipe
-          </button>
-        </form>
+        <button
+          className="my-2 py-1 px-2 border rounded-xl"
+          onClick={toggleModal}
+        >
+          Delete recipe
+        </button>
+        <div
+          className={
+            showModal
+              ? 'block w-full h-full fixed top-0 left-0 z-10 overflow-auto bg-black/60'
+              : 'hidden'
+          }
+        >
+          <div className="border mx-auto my-32 p-5 bg-white w-4/5 rounded-lg">
+            <h3>Are you sure you want to delete this recipe?</h3>
+            <form onSubmit={handleDelete}>
+              <button className="my-2 py-1 px-2 border rounded-xl">
+                Delete
+              </button>
+            </form>
+            <button
+              className="my-2 py-1 px-2 border rounded-xl"
+              onClick={toggleModal}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
       </section>
     ) : (
       <section name="recipe" className="flex flex-col items-center w-80">
