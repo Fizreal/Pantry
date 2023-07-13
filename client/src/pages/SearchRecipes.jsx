@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import RecipeCard from '../components/RecipeCard'
 import { addRecipe } from '../services/groceryListServices'
 
-const SearchRecipes = ({ recipes, groceries, updateGroceries }) => {
+const SearchRecipes = ({ recipes, groceries, updateGroceries, user }) => {
+  const navigate = useNavigate()
   const [filter, setFilter] = useState([
     'Meal',
     'Snack',
@@ -45,21 +46,22 @@ const SearchRecipes = ({ recipes, groceries, updateGroceries }) => {
     filterRecipes()
   }, [groceries])
 
-  return (
+  return user ? (
     <section>
       <div className="w-80">
         <Link to={`/groceries/${groceryId}`}>
-          <button>Back</button>
+          <button className="py-1 px-2 border rounded-xl">Back</button>
         </Link>
       </div>
       <h1>Recipes</h1>
       <div>
-        <label htmlFor="filter">Filter by recipe category:</label>
+        <label htmlFor="filter">Filter by category:</label>
         <select
           name="filter"
           id="filter"
           onChange={handleChange}
           defaultValue="All"
+          className="shadow appearance-none border rounded  ml-1 py-0.5 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         >
           <option value="All">Show all</option>
           <option value="Meal">Meal</option>
@@ -84,6 +86,16 @@ const SearchRecipes = ({ recipes, groceries, updateGroceries }) => {
         )}
       </div>
     </section>
+  ) : (
+    <div className="flex flex-col items-center">
+      <h1>Oops! You must be signed in to do that!</h1>
+      <button
+        onClick={() => navigate('/login')}
+        className="my-2 py-1 px-2 border rounded-xl"
+      >
+        Sign In
+      </button>
+    </div>
   )
 }
 

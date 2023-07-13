@@ -50,14 +50,12 @@ const Register = () => {
       formValues.password === formValues.passwordConfirm ? false : true
     setDisabled(checkDisabled)
     setErrorMessage(
-      checkDisabled && formValues.passwordConfirm !== ''
-        ? 'Passwords must match'
-        : ''
+      checkDisabled && formValues.passwordConfirm ? 'Passwords must match' : ''
     )
   }, [checkErrors])
 
   return (
-    <div className="w-full max-w-xs">
+    <div className="w-full max-w-xs mt-16">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -99,7 +97,7 @@ const Register = () => {
           <input
             type="password"
             name="passwordConfirm"
-            value={formValues.passwordConfirm || ''}
+            value={formValues.passwordConfirm}
             onChange={handleChange}
             placeholder="Confirm Password"
             required

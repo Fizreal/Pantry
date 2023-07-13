@@ -1,8 +1,10 @@
 import RecipeListCard from '../components/RecipeListCard'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-const Recipes = ({ recipes }) => {
+const Recipes = ({ recipes, user }) => {
+  let navigate = useNavigate()
   const [filter, setFilter] = useState([
     'Meal',
     'Snack',
@@ -18,19 +20,20 @@ const Recipes = ({ recipes }) => {
     }
   }
 
-  return (
+  return user ? (
     <section name="recipes" className="flex flex-col items-center w-80">
       <Link to="/recipes/new" className="m-2">
-        <button className="p-2 border rounded-xl">New recipe</button>
+        <button className="py-1 px-2 border rounded-xl">New recipe</button>
       </Link>
       <h1 className="text-xl m-2">Your Recipes:</h1>
       <div>
-        <label htmlFor="filter">Filter by recipe category:</label>
+        <label htmlFor="filter">Filter by category:</label>
         <select
           name="filter"
           id="filter"
           onChange={handleChange}
           defaultValue="All"
+          className="shadow appearance-none border rounded  ml-1 py-0.5 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         >
           <option value="All">Show all</option>
           <option value="Meal">Meal</option>
@@ -51,6 +54,16 @@ const Recipes = ({ recipes }) => {
         )}
       </div>
     </section>
+  ) : (
+    <div className="flex flex-col items-center">
+      <h1>Oops! You must be signed in to do that!</h1>
+      <button
+        onClick={() => navigate('/login')}
+        className="my-2 py-1 px-2 border rounded-xl"
+      >
+        Sign In
+      </button>
+    </div>
   )
 }
 

@@ -40,8 +40,8 @@ const IngredientCard = ({
     <div className="flex flex-col p-2 w-80 border m-2 rounded-lg">
       <h3 className="self-center text-lg">{ingredient.food.label}</h3>
       <form onSubmit={handleSubmit} className="flex flex-col">
-        <div className="my-3">
-          <div>
+        <div>
+          <div className="my-2">
             {' '}
             <label htmlFor="quantity">Quantity:</label>
             <input
@@ -52,10 +52,10 @@ const IngredientCard = ({
               value={formValues.quantity}
               min="0"
               onChange={handleChange}
-              className="w-10 text-center"
+              className="w-10 text-center shadow appearance-none border rounded  ml-1 py-0.5 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          <div>
+          <div className="my-2">
             {' '}
             <label htmlFor="measure">Measure:</label>
             <select
@@ -63,6 +63,7 @@ const IngredientCard = ({
               id="measure"
               onChange={handleChange}
               value={formValues.measure}
+              className="shadow appearance-none border rounded  ml-1 py-0.5 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="" disabled>
                 Select unit measure
@@ -79,7 +80,7 @@ const IngredientCard = ({
           className="p-1.5 self-center border rounded-xl"
           disabled={disabled}
         >
-          Add
+          Add to recipe
         </button>
       </form>
     </div>

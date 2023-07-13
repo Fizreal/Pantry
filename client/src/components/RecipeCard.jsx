@@ -4,7 +4,9 @@ const RecipeListCard = ({ recipe, handleSubmit }) => {
       <h2 className="text-lg">{recipe.name}</h2>
       <p>Category: {recipe.category}</p>
       <form onSubmit={(e) => handleSubmit(e, recipe._id)}>
-        <button>Add to grocery list</button>
+        <button className="my-2 py-1 px-2 border rounded-xl">
+          Add to grocery list
+        </button>
       </form>
     </div>
   )

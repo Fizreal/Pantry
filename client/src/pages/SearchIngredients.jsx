@@ -3,11 +3,12 @@ import {
   searchSuggestions
 } from '../services/ingredientServices'
 import { useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import IngredientCard from '../components/IngredientCard'
 import SearchBar from '../components/SearchBar'
 
-const SearchIngredients = ({ recipes, updateRecipes }) => {
+const SearchIngredients = ({ recipes, updateRecipes, user }) => {
+  let navigate = useNavigate()
   const [searchResults, setSearchResults] = useState(null)
   const [search, setSearch] = useState('')
 
@@ -38,11 +39,13 @@ const SearchIngredients = ({ recipes, updateRecipes }) => {
     setSearchResults(filteredResults)
   }
 
-  return (
+  return user ? (
     <section name="search ingredient" className="flex flex-col items-center">
       <div className="w-80">
         <Link to={`/recipes/${recipeId}`}>
-          <button>Back</button>
+          <button className="py-1 px-2  self-center border rounded-xl">
+            Back
+          </button>
         </Link>
       </div>
       <SearchBar
@@ -67,6 +70,16 @@ const SearchIngredients = ({ recipes, updateRecipes }) => {
         ) : null}
       </div>
     </section>
+  ) : (
+    <div className="flex flex-col items-center">
+      <h1>Oops! You must be signed in to do that!</h1>
+      <button
+        onClick={() => navigate('/login')}
+        className="my-2 py-1 px-2 border rounded-xl"
+      >
+        Sign In
+      </button>
+    </div>
   )
 }
 

@@ -1,8 +1,7 @@
 import './App.css'
 import './index.css'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { CheckSession } from './services/Auth'
 import { getRecipes } from './services/recipeServices'
 import {
@@ -58,10 +57,10 @@ const App = () => {
     const token = localStorage.getItem('token')
     if (token) {
       checkToken()
+      updateRecipes()
+      updateGroceries()
     }
     console.log('hit!')
-    updateRecipes()
-    updateGroceries()
   }, [])
 
   return (
@@ -69,7 +68,6 @@ const App = () => {
       <Nav user={user} handleLogOut={handleLogOut} />
       <main className="min-h-screen flex flex-col items-center">
         <Routes>
-          <Route path="/" element={<Home handleSubmit={handleSubmit} />} />
           <Route
             path="/login"
             element={
@@ -81,15 +79,26 @@ const App = () => {
             }
           />
           <Route path="/register" element={<Register />} />
-          <Route path="/recipes" element={<Recipes recipes={recipes} />} />
+          <Route
+            path="/"
+            element={<Home handleSubmit={handleSubmit} user={user} />}
+          />
+          <Route
+            path="/recipes"
+            element={<Recipes recipes={recipes} user={user} />}
+          />
           <Route
             path="/recipes/new"
-            element={<CreateRecipe updateRecipes={updateRecipes} />}
+            element={<CreateRecipe updateRecipes={updateRecipes} user={user} />}
           />
           <Route
             path="/recipes/:recipeId"
             element={
-              <RecipeDetail recipes={recipes} updateRecipes={updateRecipes} />
+              <RecipeDetail
+                recipes={recipes}
+                updateRecipes={updateRecipes}
+                user={user}
+              />
             }
           />
           <Route
@@ -99,13 +108,18 @@ const App = () => {
                 recipes={recipes}
                 setRecipes={setRecipes}
                 updateRecipes={updateRecipes}
+                user={user}
               />
             }
           />
           <Route
             path="/groceries"
             element={
-              <Groceries groceries={groceries} handleSubmit={handleSubmit} />
+              <Groceries
+                groceries={groceries}
+                handleSubmit={handleSubmit}
+                user={user}
+              />
             }
           />
           <Route
@@ -114,6 +128,7 @@ const App = () => {
               <GroceryDetail
                 groceries={groceries}
                 updateGroceries={updateGroceries}
+                user={user}
               />
             }
           />
@@ -124,6 +139,7 @@ const App = () => {
                 recipes={recipes}
                 groceries={groceries}
                 updateGroceries={updateGroceries}
+                user={user}
               />
             }
           />

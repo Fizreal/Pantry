@@ -1,22 +1,38 @@
 import GroceryListCard from '../components/GroceryListCard'
+import { useNavigate } from 'react-router-dom'
 
-const Groceries = ({ groceries, handleSubmit }) => {
-  return (
+const Groceries = ({ groceries, handleSubmit, user }) => {
+  const navigate = useNavigate()
+  return user ? (
     <section name="groceries" className="flex flex-col items-center w-80">
       <form onSubmit={handleSubmit} className="m-2">
-        <button className="p-2 border rounded-xl">New grocery list</button>
+        <button className="py-1 px-2 border rounded-xl">
+          New grocery list
+        </button>
       </form>
       <h1 className="text-xl m-2">Grocery Lists:</h1>
       <div>
-        {groceries.length ? (
-          groceries.map((list) => (
-            <GroceryListCard key={list._id} groceryList={list} />
-          ))
+        {groceries ? (
+          groceries
+            .toSorted((a, b) => new Date(b.date) - new Date(a.date))
+            .map((list) => (
+              <GroceryListCard key={list._id} groceryList={list} />
+            ))
         ) : (
           <p>No grocery lists</p>
         )}
       </div>
     </section>
+  ) : (
+    <div className="flex flex-col items-center">
+      <h1>Oops! You must be signed in to do that!</h1>
+      <button
+        onClick={() => navigate('/login')}
+        className="my-2 py-1 px-2 border rounded-xl"
+      >
+        Sign In
+      </button>
+    </div>
   )
 }
 
