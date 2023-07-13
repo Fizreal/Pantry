@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import {
   removeRecipe,
-  deleteGroceryList
+  deleteGroceryList,
+  compileGroceries
 } from '../services/groceryListServices'
 
 const GroceryDetail = ({ groceries, updateGroceries }) => {
@@ -31,16 +32,36 @@ const GroceryDetail = ({ groceries, updateGroceries }) => {
 
   const handleDelete = async (e) => {
     e.preventDefault()
-    deleteGroceryList(groceryId)
+    await deleteGroceryList(groceryId)
     updateGroceries()
     navigate('/groceries')
+  }
+
+  const handleCompile = async (e) => {
+    e.preventDefault()
+    await compileGroceries(groceryId)
+    updateGroceries()
   }
 
   return groceryList ? (
     <section name="grocery list" className="flex flex-col items-center w-80">
       <h1 className="text-xl m-2">{groceryList.date.slice(0, 10)}</h1>
       <p>Status: {groceryList.finished ? 'Complete' : 'Open'}</p>
-      <p></p>
+      <form onSubmit={handleCompile}>
+        <button>Compile recipes</button>
+      </form>
+      {groceryList.ingredients.length ? (
+        <section>
+          <h2>Ingredients</h2>
+          <ul>
+            {groceryList.ingredients.map((ingr) => (
+              <li key={ingr._id}>
+                {ingr.quantity} {ingr.ingredient.measure} {ingr.ingredient.name}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
       <section name="recipes" className="flex flex-col w-80">
         <h2 className="text-lg m-2 self-center">Recipes</h2>
         <table>

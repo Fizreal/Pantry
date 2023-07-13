@@ -7,14 +7,17 @@ const User = require('../models/user')
 const GroceryList = require('../models/groceryList')
 const Recipe = require('../models/recipe')
 const Ingredient = require('../models/ingredient')
+const groceryList = require('../models/groceryList')
 
 const index = async (req, res) => {
   const { payload } = res.locals
   let user = await User.findById(payload.id)
-  let groceryLists = await GroceryList.find({ user: user._id }).populate([
-    'recipes',
-    'ingredients.ingredient'
-  ])
+  let groceryLists = await GroceryList.find({ user: user._id })
+    .populate({
+      path: 'recipes',
+      populate: { path: 'ingredients.ingredient' }
+    })
+    .populate('ingredients.ingredient')
   res.send(groceryLists)
 }
 
@@ -79,20 +82,24 @@ const deleteGroceryList = async (req, res) => {
 }
 
 const compile = async (req, res) => {
-  let groceryList = await GroceryList.findById(req.params.groceryId).populate(
-    'recipes'
-  )
-  console.log(groceryList)
+  let groceryList = await GroceryList.findById(req.params.groceryId).populate({
+    path: 'recipes',
+    populate: { path: 'ingredients.ingredient' }
+  })
+  groceryList.ingredients = []
   let ingredients = []
   try {
     groceryList.recipes.forEach((recipe) => {
       recipe.ingredients.forEach((ingredientObj) => {
-        let index = ingredients.indexOf(ingredientObj.ingredient.toString())
+        let index = ingredients.indexOf(ingredientObj.ingredient._id.toString())
         if (index === -1) {
-          ingredients.push(ingredientObj.ingredient.toString())
+          ingredients.push(ingredientObj.ingredient._id.toString())
+          console.log(ingredients)
           groceryList.ingredients.push(ingredientObj)
         } else {
-          parseFloat(groceryList.ingredients[index].quantity) += parseFloat(ingredientObj.quantity)
+          let currentValue = parseFloat(groceryList.ingredients[index].quantity)
+          groceryList.ingredients[index].quantity =
+            currentValue + parseFloat(ingredientObj.quantity)
         }
       })
     })
