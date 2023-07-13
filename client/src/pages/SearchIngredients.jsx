@@ -3,7 +3,7 @@ import {
   searchSuggestions
 } from '../services/ingredientServices'
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import IngredientCard from '../components/IngredientCard'
 import SearchBar from '../components/SearchBar'
 
@@ -40,6 +40,11 @@ const SearchIngredients = ({ recipes, updateRecipes }) => {
 
   return (
     <section name="search ingredient" className="flex flex-col items-center">
+      <div className="w-80">
+        <Link to={`/recipes/${recipeId}`}>
+          <button>Back</button>
+        </Link>
+      </div>
       <SearchBar
         search={search}
         handleSubmit={handleSubmit}

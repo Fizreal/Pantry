@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import RecipeCard from '../components/RecipeCard'
 import { addRecipe } from '../services/groceryListServices'
 
@@ -36,7 +36,6 @@ const SearchRecipes = ({ recipes, groceries, updateGroceries }) => {
           (groceryList) => groceryList._id === groceryId
         )
         let includedRecipes = groceryList.recipes.map((recipe) => recipe._id)
-        console.log(includedRecipes)
         let filteredRecipes = recipes.filter(
           (recipe) => !includedRecipes.includes(recipe._id)
         )
@@ -48,6 +47,11 @@ const SearchRecipes = ({ recipes, groceries, updateGroceries }) => {
 
   return (
     <section>
+      <div className="w-80">
+        <Link to={`/groceries/${groceryId}`}>
+          <button>Back</button>
+        </Link>
+      </div>
       <h1>Recipes</h1>
       <div>
         <label htmlFor="filter">Filter by recipe category:</label>
