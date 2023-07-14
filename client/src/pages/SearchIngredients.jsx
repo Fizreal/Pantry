@@ -9,7 +9,7 @@ import SearchBar from '../components/SearchBar'
 
 const SearchIngredients = ({ recipes, updateRecipes, user }) => {
   let navigate = useNavigate()
-  const [searchResults, setSearchResults] = useState(null)
+  const [searchResults, setSearchResults] = useState([])
   const [search, setSearch] = useState('')
 
   const { recipeId } = useParams()
@@ -29,7 +29,7 @@ const SearchIngredients = ({ recipes, updateRecipes, user }) => {
       )
       return filteredSearch
     }
-    return null
+    return []
   }
 
   const handleSubmit = async (e) => {
@@ -44,7 +44,7 @@ const SearchIngredients = ({ recipes, updateRecipes, user }) => {
       name="search ingredient"
       className="mt-8 flex flex-col items-center text-center"
     >
-      <div className="self-start">
+      <div className="self-start ml-2">
         <Link to={`/recipes/${recipeId}`}>
           <button className="py-1 px-2 button rounded-xl">Back</button>
         </Link>
@@ -56,7 +56,7 @@ const SearchIngredients = ({ recipes, updateRecipes, user }) => {
       />
       <h1 className="text-2xl">Search Results</h1>
       {searchResults ? (
-        <div className="flex flex-wrap justify-center">
+        <div className="flex flex-wrap justify-center w-80 md:w-[700px] lg:w-[1020px]">
           {searchResults.map((ingredient) => (
             <IngredientCard
               key={ingredient.food.foodId}
@@ -70,15 +70,15 @@ const SearchIngredients = ({ recipes, updateRecipes, user }) => {
       ) : null}
     </section>
   ) : (
-    <div className="flex flex-col items-center">
-      <h1>Oops! You must be signed in to do that!</h1>
+    <section name="Unauthorized" className="flex flex-col items-center mt-8">
+      <h1 className="">Oops! You must be signed in to do that!</h1>
       <button
         onClick={() => navigate('/login')}
-        className="my-2 py-1 px-2 border rounded-xl"
+        className="my-2 py-1 px-2 button rounded-xl"
       >
         Sign In
       </button>
-    </div>
+    </section>
   )
 }
 

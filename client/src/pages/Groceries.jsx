@@ -11,7 +11,7 @@ const Groceries = ({ groceries, handleSubmit, user }) => {
           New grocery list
         </button>
       </form>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center w-80 md:w-[700px] lg:w-[1020px]">
         {groceries ? (
           groceries
             .toSorted((a, b) => new Date(b.date) - new Date(a.date))
@@ -24,15 +24,15 @@ const Groceries = ({ groceries, handleSubmit, user }) => {
       </div>
     </section>
   ) : (
-    <div className="flex flex-col items-center">
-      <h1>Oops! You must be signed in to do that!</h1>
+    <section name="Unauthorized" className="flex flex-col items-center mt-8">
+      <h1 className="">Oops! You must be signed in to do that!</h1>
       <button
         onClick={() => navigate('/login')}
-        className="my-2 py-1 px-2 border rounded-xl"
+        className="my-2 py-1 px-2 button rounded-xl"
       >
         Sign In
       </button>
-    </div>
+    </section>
   )
 }
 

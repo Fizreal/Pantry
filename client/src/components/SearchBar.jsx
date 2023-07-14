@@ -1,6 +1,6 @@
 const SearchBar = ({ handleSubmit, handleChange, search }) => {
   return (
-    <section name="Search bar">
+    <section name="Search bar" className="m-2">
       <form onSubmit={handleSubmit} className="flex flex-col">
         <input
           type="text"

@@ -48,7 +48,7 @@ const SearchRecipes = ({ recipes, groceries, updateGroceries, user }) => {
 
   return user ? (
     <section className="mt-8 flex flex-col items-center text-center">
-      <div className="self-start">
+      <div className="self-start ml-2">
         <Link to={`/groceries/${groceryId}`}>
           <button className="py-1 px-2 button rounded-xl">Back</button>
         </Link>
@@ -70,7 +70,7 @@ const SearchRecipes = ({ recipes, groceries, updateGroceries, user }) => {
           <option value="Dessert">Dessert</option>
         </select>
       </div>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center w-80 md:w-[700px] lg:w-[1020px]">
         {availableRecipes.length ? (
           availableRecipes
             .filter((recipe) => filter.includes(recipe.category))
@@ -87,15 +87,15 @@ const SearchRecipes = ({ recipes, groceries, updateGroceries, user }) => {
       </div>
     </section>
   ) : (
-    <div className="flex flex-col items-center">
-      <h1>Oops! You must be signed in to do that!</h1>
+    <section name="Unauthorized" className="flex flex-col items-center mt-8">
+      <h1 className="">Oops! You must be signed in to do that!</h1>
       <button
         onClick={() => navigate('/login')}
-        className="my-2 py-1 px-2 border rounded-xl"
+        className="my-2 py-1 px-2 button rounded-xl"
       >
         Sign In
       </button>
-    </div>
+    </section>
   )
 }
 

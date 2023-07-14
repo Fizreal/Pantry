@@ -44,7 +44,7 @@ const Recipes = ({ recipes, user }) => {
           <option value="Dessert">Dessert</option>
         </select>
       </div>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center w-80 md:w-[700px] lg:w-[1020px]">
         {recipes ? (
           recipes
             .filter((recipe) => filter.includes(recipe.category))
@@ -57,7 +57,7 @@ const Recipes = ({ recipes, user }) => {
       </div>
     </section>
   ) : (
-    <section className="flex flex-col items-center mt-8">
+    <section name="Unauthorized" className="flex flex-col items-center mt-8">
       <h1 className="">Oops! You must be signed in to do that!</h1>
       <button
         onClick={() => navigate('/login')}
