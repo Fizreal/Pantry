@@ -47,14 +47,14 @@ const SearchRecipes = ({ recipes, groceries, updateGroceries, user }) => {
   }, [groceries])
 
   return user ? (
-    <section>
-      <div className="w-80">
+    <section className="mt-8 flex flex-col items-center text-center">
+      <div className="self-start">
         <Link to={`/groceries/${groceryId}`}>
-          <button className="py-1 px-2 border rounded-xl">Back</button>
+          <button className="py-1 px-2 button rounded-xl">Back</button>
         </Link>
       </div>
-      <h1>Recipes</h1>
-      <div>
+      <h1 className="text-2xl mb-2">Recipes</h1>
+      <div className="m-2">
         <label htmlFor="filter">Filter by category:</label>
         <select
           name="filter"
@@ -70,7 +70,7 @@ const SearchRecipes = ({ recipes, groceries, updateGroceries, user }) => {
           <option value="Dessert">Dessert</option>
         </select>
       </div>
-      <div>
+      <div className="flex flex-wrap justify-center">
         {availableRecipes.length ? (
           availableRecipes
             .filter((recipe) => filter.includes(recipe.category))

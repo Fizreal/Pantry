@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router-dom'
 const Groceries = ({ groceries, handleSubmit, user }) => {
   const navigate = useNavigate()
   return user ? (
-    <section name="groceries" className="flex flex-col items-center w-80">
+    <section name="Groceries" className="flex flex-col items-center mt-8">
+      <h1 className="text-2xl m-2">Grocery Lists:</h1>
       <form onSubmit={handleSubmit} className="m-2">
         <button className="py-1 px-2 shadow-md rounded-xl button">
           New grocery list
         </button>
       </form>
-      <h1 className="text-xl m-2">Grocery Lists:</h1>
-      <div>
+      <div className="flex flex-wrap justify-center">
         {groceries ? (
           groceries
             .toSorted((a, b) => new Date(b.date) - new Date(a.date))

@@ -50,25 +50,24 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
 
   return user ? (
     groceryList ? (
-      <section name="grocery list" className="flex flex-col items-center w-80">
-        <h1 className="text-xl m-2">{groceryList.date.slice(0, 10)}</h1>
+      <section name="grocery list" className="flex flex-col items-center mt-8">
+        <h1 className="text-2xl m-2">{groceryList.date.slice(0, 10)}</h1>
         <p>Status: {groceryList.finished ? 'Complete' : 'Open'}</p>
-
         {groceryList.ingredients.length ? (
           <section className="text-center">
-            <h2>Consolidated shopping list</h2>
-            <table className="w-80">
+            <h2 className="text-lg m-2">Consolidated shopping list</h2>
+            <table>
               <thead>
                 <tr>
-                  <th>Quantity</th>
-                  <th>Unit</th>
-                  <th>Ingredient</th>
+                  <th className="w-28 p-1">Quantity</th>
+                  <th className="w-28">Unit</th>
+                  <th className="w-28">Ingredient</th>
                 </tr>
               </thead>
               <tbody>
                 {groceryList.ingredients.map((ingr) => (
-                  <tr key={ingr._id} className="border-b">
-                    <td>{ingr.quantity}</td>
+                  <tr key={ingr._id} className="border-t">
+                    <td className="p-1">{ingr.quantity}</td>
                     <td>{ingr.ingredient.measure}</td>
                     <td>{ingr.ingredient.name}</td>
                   </tr>
@@ -77,7 +76,10 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
             </table>
           </section>
         ) : null}
-        <section name="recipes" className="flex flex-col w-80 text-center">
+        <section
+          name="recipes"
+          className="flex flex-col items-center text-center"
+        >
           {groceryList.recipes.length ? (
             <div>
               <form onSubmit={handleCompile}>
@@ -89,23 +91,23 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
               <table>
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th></th>
+                    <th className="w-40 p-1">Name</th>
+                    <th className="w-40">Category</th>
+                    <th className="w-12"></th>
                   </tr>
                 </thead>
                 <tbody>
                   {groceryList.recipes.map((recipe) => (
-                    <tr key={recipe._id} className="w-80 border-b">
+                    <tr key={recipe._id} className="border-t">
                       <td>{recipe.name}</td>
                       <td>{recipe.category}</td>
                       <td className="flex justify-center items-center">
                         <form
                           onSubmit={(e) => handleRemove(e, recipe._id)}
-                          className="justify-center items-center"
+                          className="justify-center items-center p-1"
                         >
-                          <button className="my-2 py-1 px-2 deleteButton rounded-lg">
-                            X
+                          <button className=" hover:bg-gray-200 w-8 h-8 p-1 rounded-lg">
+                            <img src="/trash.png" alt="Remove" />
                           </button>
                         </form>
                       </td>
@@ -125,7 +127,7 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
           </Link>
         </section>
         <button
-          className="my-2 py-1 px-2 deleteButton rounded-xl"
+          className="my-2 py-1 px-2 hover:bg-gray-200 hover:text-black rounded-xl"
           onClick={toggleModal}
         >
           Delete grocery list
@@ -143,7 +145,7 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
             </h3>
             <div className="flex justify-around">
               <form onSubmit={handleDelete}>
-                <button className="my-2 py-1 px-2 deleteButton rounded-xl">
+                <button className="my-2 py-1 px-2 button rounded-xl">
                   Delete
                 </button>
               </form>

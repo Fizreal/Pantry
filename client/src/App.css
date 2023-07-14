@@ -35,15 +35,9 @@ nav {
 }
 
 .button:hover {
-  background: #62A388;
+  background: #055E68;
 }
 
-.deleteButton {
-  background: #ef5350;
-  color: black;
-  
-}
-
-.deleteButton:hover {
-  background: #e53935;
+.input {
+  background: #B9D2D2;
 }

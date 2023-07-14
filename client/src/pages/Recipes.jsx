@@ -21,14 +21,14 @@ const Recipes = ({ recipes, user }) => {
   }
 
   return user ? (
-    <section name="recipes" className="flex flex-col items-center w-80">
-      <Link to="/recipes/new" className="m-2">
-        <button className="py-1 px-2 shadow-md rounded-xl button">
+    <section name="recipes" className="flex flex-col items-center mt-8">
+      <h1 className="text-2xl mb-2">Your Recipes:</h1>
+      <Link to="/recipes/new" className="">
+        <button className=" m-2 py-1 px-2 shadow-md rounded-xl button">
           New recipe
         </button>
       </Link>
-      <h1 className="text-xl m-2">Your Recipes:</h1>
-      <div>
+      <div className="m-2">
         <label htmlFor="filter">Filter by category:</label>
         <select
           name="filter"
@@ -44,7 +44,7 @@ const Recipes = ({ recipes, user }) => {
           <option value="Dessert">Dessert</option>
         </select>
       </div>
-      <div>
+      <div className="flex flex-wrap justify-center">
         {recipes ? (
           recipes
             .filter((recipe) => filter.includes(recipe.category))
@@ -57,15 +57,15 @@ const Recipes = ({ recipes, user }) => {
       </div>
     </section>
   ) : (
-    <div className="flex flex-col items-center">
-      <h1>Oops! You must be signed in to do that!</h1>
+    <section className="flex flex-col items-center mt-8">
+      <h1 className="">Oops! You must be signed in to do that!</h1>
       <button
         onClick={() => navigate('/login')}
-        className="my-2 py-1 px-2 border rounded-xl"
+        className="my-2 py-1 px-2 button rounded-xl"
       >
         Sign In
       </button>
-    </div>
+    </section>
   )
 }
 

@@ -40,12 +40,13 @@ const SearchIngredients = ({ recipes, updateRecipes, user }) => {
   }
 
   return user ? (
-    <section name="search ingredient" className="flex flex-col items-center">
-      <div className="w-80">
+    <section
+      name="search ingredient"
+      className="mt-8 flex flex-col items-center text-center"
+    >
+      <div className="self-start">
         <Link to={`/recipes/${recipeId}`}>
-          <button className="py-1 px-2  self-center border rounded-xl">
-            Back
-          </button>
+          <button className="py-1 px-2 button rounded-xl">Back</button>
         </Link>
       </div>
       <SearchBar
@@ -53,22 +54,20 @@ const SearchIngredients = ({ recipes, updateRecipes, user }) => {
         handleSubmit={handleSubmit}
         handleChange={handleChange}
       />
-      <div className="m-3">
-        <h1 className="text-xl">Search Results</h1>
-        {searchResults ? (
-          <div>
-            {searchResults.map((ingredient) => (
-              <IngredientCard
-                key={ingredient.food.foodId}
-                ingredient={ingredient}
-                setSearchResults={setSearchResults}
-                setSearch={setSearch}
-                updateRecipes={updateRecipes}
-              />
-            ))}
-          </div>
-        ) : null}
-      </div>
+      <h1 className="text-2xl">Search Results</h1>
+      {searchResults ? (
+        <div className="flex flex-wrap justify-center">
+          {searchResults.map((ingredient) => (
+            <IngredientCard
+              key={ingredient.food.foodId}
+              ingredient={ingredient}
+              setSearchResults={setSearchResults}
+              setSearch={setSearch}
+              updateRecipes={updateRecipes}
+            />
+          ))}
+        </div>
+      ) : null}
     </section>
   ) : (
     <div className="flex flex-col items-center">

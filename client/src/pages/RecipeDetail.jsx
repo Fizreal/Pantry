@@ -40,52 +40,53 @@ const RecipeDetail = ({ recipes, updateRecipes, user }) => {
 
   return user ? (
     recipe ? (
-      <section name="recipe" className="flex flex-col items-center w-80">
-        <h1 className="text-xl m-2">{recipe.name}</h1>
-        <p>Category: {recipe.category}</p>
-        <p>Description: {recipe.description}</p>
-        <section name="ingredients" className="flex flex-col w-80 text-center">
-          <h2 className="text-lg m-2">Ingredients</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Quantity</th>
-                <th>Unit</th>
-                <th>Ingredient</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {recipe.ingredients.map((ingr) => (
-                <tr key={ingr.ingredient._id} className="w-80 border-b">
-                  <td>{ingr.quantity}</td>
-                  <td>{ingr.ingredient.measure}</td>
-                  <td>{ingr.ingredient.name}</td>
-                  <td className="flex justify-center items-center">
-                    <form
-                      onSubmit={(e) => handleRemove(e, ingr.ingredient._id)}
-                      className="justify-center items-center"
-                    >
-                      <button className="my-2 py-1 px-2 deleteButton rounded-lg">
-                        X
-                      </button>
-                    </form>
-                  </td>
+      <section name="recipe" className="flex flex-col items-center mt-8">
+        <h1 className="text-2xl mb-2">{recipe.name}</h1>
+        <div>
+          <p className="my-2">Category: {recipe.category}</p>
+          <p className="my-2">Description: {recipe.description}</p>
+        </div>
+        {recipe.ingredients.length ? (
+          <section name="ingredients" className="flex flex-col text-center m-2">
+            <h2 className="text-lg m-2">Ingredients</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th className="w-24 p-1">Quantity</th>
+                  <th className="w-24">Unit</th>
+                  <th className="w-24">Ingredient</th>
+                  <th className="w-12"></th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-          <Link
-            to={`/recipes/${recipe._id}/ingredients`}
-            className="self-center"
-          >
-            <button className="my-2 py-1 px-2 rounded-xl button">
-              Add ingredients
-            </button>
-          </Link>
-        </section>
+              </thead>
+              <tbody>
+                {recipe.ingredients.map((ingr) => (
+                  <tr key={ingr.ingredient._id} className="border-t">
+                    <td>{ingr.quantity}</td>
+                    <td>{ingr.ingredient.measure}</td>
+                    <td>{ingr.ingredient.name}</td>
+                    <td className="flex justify-center items-center p-1">
+                      <form
+                        onSubmit={(e) => handleRemove(e, ingr.ingredient._id)}
+                        className="justify-center items-center"
+                      >
+                        <button className=" hover:bg-gray-200 w-8 h-8 p-1 rounded-lg">
+                          <img src="/trash.png" alt="Remove" />
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        ) : null}
+        <Link to={`/recipes/${recipe._id}/ingredients`} className="self-center">
+          <button className="my-2 py-1 px-2 rounded-xl button">
+            Add ingredients
+          </button>
+        </Link>
         <button
-          className="my-2 py-1 px-2 rounded-xl deleteButton"
+          className="my-2 py-1 px-2 hover:bg-gray-200 hover:text-black rounded-xl "
           onClick={toggleModal}
         >
           Delete recipe
@@ -103,7 +104,7 @@ const RecipeDetail = ({ recipes, updateRecipes, user }) => {
             </h3>
             <div className="flex justify-around">
               <form onSubmit={handleDelete}>
-                <button className="my-2 py-1 px-2 bg-red-400 hover:bg-red-600 rounded-xl">
+                <button className="my-2 py-1 px-2 button rounded-xl">
                   Delete
                 </button>
               </form>
