@@ -94,7 +94,6 @@ const compile = async (req, res) => {
         let index = ingredients.indexOf(ingredientObj.ingredient._id.toString())
         if (index === -1) {
           ingredients.push(ingredientObj.ingredient._id.toString())
-          console.log(ingredients)
           groceryList.ingredients.push(ingredientObj)
         } else {
           let currentValue = parseFloat(groceryList.ingredients[index].quantity)

@@ -25,7 +25,6 @@ const SearchRecipes = ({ recipes, groceries, updateGroceries, user }) => {
 
   const handleSubmit = async (e, recipeId) => {
     e.preventDefault()
-    console.log(recipeId)
     await addRecipe(groceryId, recipeId)
     updateGroceries()
   }

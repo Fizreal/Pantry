@@ -3,18 +3,21 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import {
   removeRecipe,
   deleteGroceryList,
-  compileGroceries
+  compileGroceries,
+  finishGroceryList
 } from '../services/groceryListServices'
 
 const GroceryDetail = ({ groceries, updateGroceries, user }) => {
   let navigate = useNavigate()
   const [groceryList, setGroceryList] = useState(null)
   const [showModal, setShowModal] = useState(false)
+  const [formValues, setFormValues] = useState({})
 
   const { groceryId } = useParams()
 
   useEffect(() => {
     const selectGroceryList = () => {
+      let selectGroceryList
       if (groceries) {
         let selectGroceryList = groceries.find((grocery) => {
           return grocery._id === groceryId
@@ -44,7 +47,18 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
 
   const handleCompile = async (e) => {
     e.preventDefault()
+    setFormValues({})
     await compileGroceries(groceryId)
+    updateGroceries()
+  }
+
+  const handleChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value })
+  }
+
+  const handleFinished = async (e) => {
+    e.preventDefault()
+    await finishGroceryList(groceryId, formValues)
     updateGroceries()
   }
 
@@ -53,28 +67,70 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
       <section name="grocery list" className="flex flex-col items-center mt-8">
         <h1 className="text-2xl m-2">{groceryList.date.slice(0, 10)}</h1>
         <p>Status: {groceryList.finished ? 'Complete' : 'Open'}</p>
+        {groceryList.recipes.length || groceryList.ingredients.length ? (
+          <form onSubmit={handleCompile}>
+            <button className="my-2 py-1 px-2 button rounded-xl">
+              Generate grocery list
+            </button>
+          </form>
+        ) : null}
         {groceryList.ingredients.length ? (
-          <section className="text-center">
-            <h2 className="text-lg m-2">Consolidated shopping list</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th className="w-28 p-1">Quantity</th>
-                  <th className="w-28">Unit</th>
-                  <th className="w-28">Ingredient</th>
-                </tr>
-              </thead>
-              <tbody>
+          !groceryList.finished ? (
+            <section className="text-center">
+              <h2 className="text-lg m-2">Consolidated shopping list</h2>
+              <form onSubmit={handleFinished}>
+                <div className="grid grid-cols-3 p-1">
+                  <h3 className="w-28">Total Quantity</h3>
+                  <h3 className="w-28">Unit</h3>
+                  <h3 className="w-28">Ingredient</h3>
+                </div>
                 {groceryList.ingredients.map((ingr) => (
-                  <tr key={ingr._id} className="border-t">
-                    <td className="p-1">{ingr.quantity}</td>
-                    <td>{ingr.ingredient.measure}</td>
-                    <td>{ingr.ingredient.name}</td>
-                  </tr>
+                  <div key={ingr._id} className="grid grid-cols-3 border-t p-1">
+                    <div className="w-28">
+                      <input
+                        type="number"
+                        name={ingr._id}
+                        id={ingr._id}
+                        step=".1"
+                        value={formValues[ingr._id] || ingr.quantity}
+                        min="0"
+                        onChange={handleChange}
+                        className="w-10 text-center shadow appearance-none border rounded py-0.5 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      />
+                    </div>
+
+                    <p className="w-28">{ingr.ingredient.measure}</p>
+                    <p className="w-28">{ingr.ingredient.name}</p>
+                  </div>
                 ))}
-              </tbody>
-            </table>
-          </section>
+                <button className="my-2 py-1 px-2 button rounded-xl">
+                  Finalize list
+                </button>
+              </form>
+            </section>
+          ) : (
+            <section className="text-center">
+              <h2 className="text-lg m-2">Consolidated shopping list</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th className="w-28 p-1">Quantity</th>
+                    <th className="w-28">Unit</th>
+                    <th className="w-28">Ingredient</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {groceryList.ingredients.map((ingr) => (
+                    <tr key={ingr._id} className="border-t">
+                      <td className="p-1">{ingr.quantity}</td>
+                      <td>{ingr.ingredient.measure}</td>
+                      <td>{ingr.ingredient.name}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </section>
+          )
         ) : null}
         <section
           name="recipes"
@@ -82,11 +138,6 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
         >
           {groceryList.recipes.length ? (
             <div>
-              <form onSubmit={handleCompile}>
-                <button className="my-2 py-1 px-2 button rounded-xl">
-                  Generate grocery list
-                </button>
-              </form>
               <h2 className="text-lg m-2">Recipes</h2>
               <table>
                 <thead>

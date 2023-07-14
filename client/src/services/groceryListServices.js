@@ -57,3 +57,15 @@ export const compileGroceries = async (groceryId) => {
     throw error
   }
 }
+
+export const finishGroceryList = async (groceryId, data) => {
+  try {
+    const response = await Client.put(
+      `/groceryList/${groceryId}/finished`,
+      data
+    )
+    return response
+  } catch (error) {
+    throw error
+  }
+}

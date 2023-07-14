@@ -20,14 +20,20 @@ const Home = ({ handleSubmit, user }) => {
       </div>
     </section>
   ) : (
-    <section name="Home" className="flex flex-col items-center mt-8">
-      <h1 className="">Oops! You must be signed in to do that!</h1>
-      <button
-        onClick={() => navigate('/login')}
-        className="my-2 py-1 px-2 button rounded-xl"
-      >
-        Sign In
-      </button>
+    <section className="flex flex-col items-center mt-8">
+      <h1 className="text-2xl mb-2">Welcome to Pantry</h1>
+      <div className="flex">
+        <div className="flex items-center justify-center card w-36 h-20 rounded-xl p-3 m-2 shadow">
+          <Link to="/login">
+            <button>Login</button>
+          </Link>
+        </div>
+        <div className="flex items-center justify-center card w-36 h-20 rounded-xl p-3 m-2 shadow">
+          <Link to="/register">
+            <button>Register</button>
+          </Link>
+        </div>
+      </div>
     </section>
   )
 }
