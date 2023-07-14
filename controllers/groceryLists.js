@@ -109,7 +109,31 @@ const compile = async (req, res) => {
     res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
   }
 }
-const finished = async (req, res) => {}
+const finished = async (req, res) => {
+  let groceryList = await GroceryList.findById(req.params.groceryId)
+  let ingredientIds = groceryList.ingredients.map((ingredient) =>
+    ingredient._id.toString()
+  )
+  try {
+    for (let i = 0; i < ingredientIds.length; i++) {
+      if (req.body[ingredientIds[i]] !== undefined) {
+        groceryList.ingredients[i].quantity = req.body[ingredientIds[i]]
+      }
+    }
+    for (let i = groceryList.ingredients.length - 1; i >= 0; i--) {
+      let quantity = groceryList.ingredients[i].quantity
+      if (quantity === '0' || quantity === '') {
+        groceryList.ingredients.splice(i, 1)
+      }
+    }
+    groceryList.finished = true
+    await groceryList.save()
+    res.send(groceryList)
+  } catch (error) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+  }
+}
 
 module.exports = {
   index,

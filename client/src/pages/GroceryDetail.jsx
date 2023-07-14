@@ -67,7 +67,8 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
       <section name="grocery list" className="flex flex-col items-center mt-8">
         <h1 className="text-2xl m-2">{groceryList.date.slice(0, 10)}</h1>
         <p>Status: {groceryList.finished ? 'Complete' : 'Open'}</p>
-        {groceryList.recipes.length || groceryList.ingredients.length ? (
+        {(groceryList.recipes.length || groceryList.ingredients.length) &&
+        !groceryList.finished ? (
           <form onSubmit={handleCompile}>
             <button className="my-2 py-1 px-2 button rounded-xl">
               Generate grocery list
@@ -92,7 +93,11 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
                         name={ingr._id}
                         id={ingr._id}
                         step=".1"
-                        value={formValues[ingr._id] || ingr.quantity}
+                        value={
+                          formValues[ingr._id] === undefined
+                            ? ingr.quantity
+                            : formValues[ingr._id]
+                        }
                         min="0"
                         onChange={handleChange}
                         className="w-10 text-center shadow appearance-none border rounded py-0.5 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -144,7 +149,7 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
                   <tr>
                     <th className="w-40 p-1">Name</th>
                     <th className="w-40">Category</th>
-                    <th className="w-12"></th>
+                    {!groceryList.finished ? <th className="w-12"></th> : null}
                   </tr>
                 </thead>
                 <tbody>
@@ -152,33 +157,37 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
                     <tr key={recipe._id} className="border-t">
                       <td>{recipe.name}</td>
                       <td>{recipe.category}</td>
-                      <td className="flex justify-center items-center">
-                        <form
-                          onSubmit={(e) => handleRemove(e, recipe._id)}
-                          className="justify-center items-center p-1"
-                        >
-                          <button className=" hover:bg-gray-200 w-8 h-8 p-1 rounded-lg">
-                            <img src="/trash.png" alt="Remove" />
-                          </button>
-                        </form>
-                      </td>
+                      {!groceryList.finished ? (
+                        <td className="flex justify-center items-center">
+                          <form
+                            onSubmit={(e) => handleRemove(e, recipe._id)}
+                            className="justify-center items-center p-1"
+                          >
+                            <button className=" hover:bg-gray-200 w-8 h-8 p-1 rounded-lg">
+                              <img src="/trash.png" alt="Remove" />
+                            </button>
+                          </form>
+                        </td>
+                      ) : null}
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
           ) : null}
-          <Link
-            to={`/groceries/${groceryList._id}/recipes`}
-            className="self-center"
-          >
-            <button className="my-2 py-1 px-2 button rounded-xl">
-              Add recipes
-            </button>
-          </Link>
+          {!groceryList.finished ? (
+            <Link
+              to={`/groceries/${groceryList._id}/recipes`}
+              className="self-center"
+            >
+              <button className="my-2 py-1 px-2 button rounded-xl">
+                Add recipes
+              </button>
+            </Link>
+          ) : null}
         </section>
         <button
-          className="my-2 py-1 px-2 hover:bg-gray-200 hover:text-black rounded-xl"
+          className="my-4 py-1 px-2 hover:bg-gray-200 hover:text-black rounded-xl"
           onClick={toggleModal}
         >
           Delete grocery list
