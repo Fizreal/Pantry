@@ -4,17 +4,17 @@ const Nav = ({ user, handleLogOut }) => {
   let userOptions
   if (user) {
     userOptions = (
-      <nav className="flex items-center w-full justify-between p-4 bg-green-500">
-        <NavLink to="/" className="text-2xl flex">
+      <nav className="flex items-center w-full justify-between p-4 ">
+        <NavLink to="/" className="text-2xl flex titleFont">
           <img src="/shopping-bag.png" alt="Logo" className="w-8 h-8 mr-2" />
-          Pantry
+          PANTRY
         </NavLink>
-        <div className="text-sm sm:text-lg">
+        <div className="text-sm sm:text-lg" id="navLinks">
           <NavLink to="/recipes" className="mx-2">
             Recipes
           </NavLink>
           <NavLink to="/groceries" className="mx-2">
-            Grocery lists
+            Groceries
           </NavLink>
           <NavLink onClick={handleLogOut} to="/login" className="mx-2">
             Sign Out
@@ -25,12 +25,12 @@ const Nav = ({ user, handleLogOut }) => {
   }
 
   const publicOptions = (
-    <nav className="flex items-center w-full justify-between p-4 bg-green-500">
+    <nav className="flex items-center w-full justify-between p-4">
       <NavLink to="/" className="text-2xl flex">
         <img src="/shopping-bag.png" alt="Logo" className="w-8 h-8 mr-2" />
-        Pantry
+        PANTRY
       </NavLink>
-      <div className="text-sm sm:text-lg">
+      <div className="text-sm sm:text-lg" id="navLinks">
         <NavLink to="/register" className="mx-2">
           Register
         </NavLink>
@@ -41,7 +41,7 @@ const Nav = ({ user, handleLogOut }) => {
     </nav>
   )
 
-  return <header className="mb-4">{user ? userOptions : publicOptions}</header>
+  return <header>{user ? userOptions : publicOptions}</header>
 }
 
 export default Nav

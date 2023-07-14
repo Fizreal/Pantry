@@ -128,23 +128,25 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
         <div
           className={
             showModal
-              ? 'block w-full h-full fixed top-0 left-0 z-10 overflow-auto bg-black/60'
+              ? 'flex justify-center items-center w-full h-full fixed top-0 left-0 z-10 overflow-auto bg-black/60'
               : 'hidden'
           }
         >
-          <div className="border mx-auto my-32 p-5 bg-white w-4/5 rounded-lg">
+          <div className="flex flex-col justify-around border p-5 bg-white rounded-lg w-80 h-60">
             <h3>Are you sure you want to delete this grocery list?</h3>
-            <form onSubmit={handleDelete}>
-              <button className="my-2 py-1 px-2 border rounded-xl">
-                Delete
+            <div className="flex justify-around">
+              <form onSubmit={handleDelete}>
+                <button className="my-2 py-1 px-2 border rounded-xl">
+                  Delete
+                </button>
+              </form>
+              <button
+                className="my-2 py-1 px-2 border rounded-xl"
+                onClick={toggleModal}
+              >
+                Cancel
               </button>
-            </form>
-            <button
-              className="my-2 py-1 px-2 border rounded-xl"
-              onClick={toggleModal}
-            >
-              Cancel
-            </button>
+            </div>
           </div>
         </div>
       </section>
