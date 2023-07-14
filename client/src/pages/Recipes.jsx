@@ -23,7 +23,9 @@ const Recipes = ({ recipes, user }) => {
   return user ? (
     <section name="recipes" className="flex flex-col items-center w-80">
       <Link to="/recipes/new" className="m-2">
-        <button className="py-1 px-2 border rounded-xl">New recipe</button>
+        <button className="py-1 px-2 shadow-md rounded-xl button">
+          New recipe
+        </button>
       </Link>
       <h1 className="text-xl m-2">Your Recipes:</h1>
       <div>

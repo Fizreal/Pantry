@@ -5,7 +5,7 @@ const GroceryListCard = ({ groceryList }) => {
 
   return (
     <Link to={`/groceries/${groceryList._id}`}>
-      <div className="p-3 border m-2 w-80 rounded-lg text-center">
+      <div className="p-3 border m-2 w-80 rounded-lg text-center card shadow">
         <h2 className="text-lg">{date}</h2>
         <p>Status: {groceryList.finished ? 'Complete' : 'Open'}</p>
       </div>

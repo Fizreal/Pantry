@@ -6,7 +6,7 @@ const Groceries = ({ groceries, handleSubmit, user }) => {
   return user ? (
     <section name="groceries" className="flex flex-col items-center w-80">
       <form onSubmit={handleSubmit} className="m-2">
-        <button className="py-1 px-2 border rounded-xl">
+        <button className="py-1 px-2 shadow-md rounded-xl button">
           New grocery list
         </button>
       </form>

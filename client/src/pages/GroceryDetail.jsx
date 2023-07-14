@@ -53,11 +53,7 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
       <section name="grocery list" className="flex flex-col items-center w-80">
         <h1 className="text-xl m-2">{groceryList.date.slice(0, 10)}</h1>
         <p>Status: {groceryList.finished ? 'Complete' : 'Open'}</p>
-        <form onSubmit={handleCompile}>
-          <button className="my-2 py-1 px-2 border rounded-xl">
-            Compile recipes
-          </button>
-        </form>
+
         {groceryList.ingredients.length ? (
           <section className="text-center">
             <h2>Consolidated shopping list</h2>
@@ -82,45 +78,54 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
           </section>
         ) : null}
         <section name="recipes" className="flex flex-col w-80 text-center">
-          <h2 className="text-lg m-2">Recipes</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {groceryList.recipes.map((recipe) => (
-                <tr key={recipe._id} className="w-80 border-b">
-                  <td>{recipe.name}</td>
-                  <td>{recipe.category}</td>
-                  <td className="flex justify-center items-center">
-                    <form
-                      onSubmit={(e) => handleRemove(e, recipe._id)}
-                      className="justify-center items-center"
-                    >
-                      <button className="my-2 py-1 px-2 border rounded-lg">
-                        X
-                      </button>
-                    </form>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {groceryList.recipes.length ? (
+            <div>
+              <form onSubmit={handleCompile}>
+                <button className="my-2 py-1 px-2 button rounded-xl">
+                  Generate grocery list
+                </button>
+              </form>
+              <h2 className="text-lg m-2">Recipes</h2>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {groceryList.recipes.map((recipe) => (
+                    <tr key={recipe._id} className="w-80 border-b">
+                      <td>{recipe.name}</td>
+                      <td>{recipe.category}</td>
+                      <td className="flex justify-center items-center">
+                        <form
+                          onSubmit={(e) => handleRemove(e, recipe._id)}
+                          className="justify-center items-center"
+                        >
+                          <button className="my-2 py-1 px-2 deleteButton rounded-lg">
+                            X
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ) : null}
           <Link
             to={`/groceries/${groceryList._id}/recipes`}
             className="self-center"
           >
-            <button className="my-2 py-1 px-2 border rounded-xl">
+            <button className="my-2 py-1 px-2 button rounded-xl">
               Add recipes
             </button>
           </Link>
         </section>
         <button
-          className="my-2 py-1 px-2 border rounded-xl"
+          className="my-2 py-1 px-2 deleteButton rounded-xl"
           onClick={toggleModal}
         >
           Delete grocery list
@@ -132,16 +137,18 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
               : 'hidden'
           }
         >
-          <div className="flex flex-col justify-around border p-5 bg-white rounded-lg w-80 h-60">
-            <h3>Are you sure you want to delete this grocery list?</h3>
+          <div className="flex flex-col justify-around border p-5 bg-white rounded-lg w-80 h-40 text-black">
+            <h3 className="text-center">
+              Are you sure you want to delete this grocery list?
+            </h3>
             <div className="flex justify-around">
               <form onSubmit={handleDelete}>
-                <button className="my-2 py-1 px-2 border rounded-xl">
+                <button className="my-2 py-1 px-2 deleteButton rounded-xl">
                   Delete
                 </button>
               </form>
               <button
-                className="my-2 py-1 px-2 border rounded-xl"
+                className="my-2 py-1 px-2 rounded-xl hover:bg-gray-200"
                 onClick={toggleModal}
               >
                 Cancel

@@ -66,7 +66,7 @@ const RecipeDetail = ({ recipes, updateRecipes, user }) => {
                       onSubmit={(e) => handleRemove(e, ingr.ingredient._id)}
                       className="justify-center items-center"
                     >
-                      <button className="my-2 py-1 px-2 border rounded-lg">
+                      <button className="my-2 py-1 px-2 deleteButton rounded-lg">
                         X
                       </button>
                     </form>
@@ -79,13 +79,13 @@ const RecipeDetail = ({ recipes, updateRecipes, user }) => {
             to={`/recipes/${recipe._id}/ingredients`}
             className="self-center"
           >
-            <button className="my-2 py-1 px-2 border rounded-xl">
+            <button className="my-2 py-1 px-2 rounded-xl button">
               Add ingredients
             </button>
           </Link>
         </section>
         <button
-          className="my-2 py-1 px-2 border rounded-xl"
+          className="my-2 py-1 px-2 rounded-xl deleteButton"
           onClick={toggleModal}
         >
           Delete recipe
@@ -97,16 +97,18 @@ const RecipeDetail = ({ recipes, updateRecipes, user }) => {
               : 'hidden'
           }
         >
-          <div className="flex flex-col justify-around border p-5 bg-white rounded-lg w-80 h-60">
-            <h3>Are you sure you want to delete this recipe?</h3>
+          <div className="flex flex-col justify-around border p-5 bg-white rounded-lg w-80 h-40 text-black">
+            <h3 className="text-center">
+              Are you sure you want to delete this recipe?
+            </h3>
             <div className="flex justify-around">
               <form onSubmit={handleDelete}>
-                <button className="my-2 py-1 px-2 border rounded-xl">
+                <button className="my-2 py-1 px-2 bg-red-400 hover:bg-red-600 rounded-xl">
                   Delete
                 </button>
               </form>
               <button
-                className="my-2 py-1 px-2 border rounded-xl"
+                className="my-2 py-1 px-2 rounded-xl hover:bg-gray-200"
                 onClick={toggleModal}
               >
                 Cancel

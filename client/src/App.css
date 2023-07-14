@@ -1,9 +1,10 @@
 body {
   margin: 0;
+  background: #343434;
 }
 
 main {
-  background: #343434;
+  color:#B9D2D2
 }
 
 nav {
@@ -21,4 +22,28 @@ nav {
 
 .mainFont {
   font-family: 'Montserrat', sans-serif;
+}
+
+.card {
+  background: #62A388;
+  color: black;
+}
+
+.button {
+  background: #B9D2D2;
+  color: black;
+}
+
+.button:hover {
+  background: #62A388;
+}
+
+.deleteButton {
+  background: #ef5350;
+  color: black;
+  
+}
+
+.deleteButton:hover {
+  background: #e53935;
 }

@@ -64,9 +64,9 @@ const App = () => {
   }, [])
 
   return (
-    <div className="App mainFont">
+    <div className="App mainFont min-h-screen">
       <Nav user={user} handleLogOut={handleLogOut} />
-      <main className="min-h-screen flex flex-col items-center mainBackground">
+      <main className="flex flex-col items-center">
         <Routes>
           <Route
             path="/login"
