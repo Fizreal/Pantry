@@ -22,6 +22,7 @@ const CreateRecipe = ({ updateRecipes, user }) => {
 
   return user ? (
     <section name="new recipe" className="flex flex-col items-center mt-8">
+      <h1 className="text-2xl mb-2">Create new recipe</h1>
       <form
         onSubmit={handleSubmit}
         className="w-80 flex flex-col card p-3 rounded-lg "

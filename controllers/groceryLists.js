@@ -186,12 +186,12 @@ const suggestions = async (req, res) => {
     )
     formattedSuggestions[0]['edaman'] = firstSuggestion.data.hints[0]
     let secondSuggestion = await axios.get(
-      `${DOMAIN}/api/food-database/v2/parser?app_id=${APP_ID}&app_key=${API_KEY}&ingr=${formattedSuggestions[0].name}`
+      `${DOMAIN}/api/food-database/v2/parser?app_id=${APP_ID}&app_key=${API_KEY}&ingr=${formattedSuggestions[1].name}`
     )
     formattedSuggestions[1]['edaman'] = secondSuggestion.data.hints[0]
 
     let thirdSuggestion = await axios.get(
-      `${DOMAIN}/api/food-database/v2/parser?app_id=${APP_ID}&app_key=${API_KEY}&ingr=${formattedSuggestions[0].name}`
+      `${DOMAIN}/api/food-database/v2/parser?app_id=${APP_ID}&app_key=${API_KEY}&ingr=${formattedSuggestions[2].name}`
     )
     formattedSuggestions[2]['edaman'] = thirdSuggestion.data.hints[0]
 
@@ -205,7 +205,46 @@ const suggestions = async (req, res) => {
   }
 }
 
-const addSuggestion = async (req, res) => {}
+const addSuggestion = async (req, res) => {
+  const { name, edamanID, measure, quantity } = req.body
+  const { payload } = res.locals
+  let user = await User.findById(payload.id)
+  let ingredient = await Ingredient.findOne({
+    user: user._id,
+    edamanID,
+    measure
+  })
+  if (!ingredient) {
+    ingredient = await Ingredient.create({
+      user: user._id,
+      edamanID,
+      name,
+      measure
+    })
+  }
+  try {
+    let groceryList = await GroceryList.findById(req.params.groceryId)
+    if (
+      !groceryList.ingredients
+        .map((ingredient) => ingredient.ingredient.toString())
+        .includes(ingredient._id.toString())
+    ) {
+      groceryList.ingredients.push({ ingredient: ingredient._id, quantity })
+      let idx = groceryList.suggestions
+        .map((suggestion) => suggestion.edaman.food.foodId)
+        .indexOf(ingredient.edamanID)
+      if (idx !== -1) {
+        groceryList.suggestions.splice(idx, 1)
+      }
+      await groceryList.save()
+      return res.send(groceryList)
+    }
+    res.send('You already have that ingredient in this grocery list!')
+  } catch (error) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+  }
+}
 
 module.exports = {
   index,

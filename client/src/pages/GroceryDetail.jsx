@@ -160,6 +160,7 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
                 <SuggestedIngredient
                   key={suggestion.name}
                   ingredient={suggestion}
+                  updateGroceries={updateGroceries}
                 />
               ))}
             </div>

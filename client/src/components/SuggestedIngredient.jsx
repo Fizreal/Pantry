@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { addSuggestion } from '../services/groceryListServices'
 
-const SuggestedIngredient = ({ ingredient }) => {
+const SuggestedIngredient = ({ ingredient, updateGroceries }) => {
   const { groceryId } = useParams()
 
   const [formValues, setFormValues] = useState({
@@ -20,9 +20,7 @@ const SuggestedIngredient = ({ ingredient }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     await addSuggestion(groceryId, formValues)
-    updateRecipes()
-    setSearchResults(null)
-    setSearch('')
+    updateGroceries()
   }
 
   useEffect(() => {
