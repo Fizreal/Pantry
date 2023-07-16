@@ -56,7 +56,7 @@ const SearchIngredients = ({ recipes, updateRecipes, user }) => {
       />
       <h1 className="text-2xl">Search Results</h1>
       {searchResults ? (
-        <div className="flex flex-wrap justify-center w-80 md:w-[700px] lg:w-[1020px]">
+        <div className="flex flex-wrap text-left justify-center w-80 md:w-[700px] lg:w-[1020px]">
           {searchResults.map((ingredient, idx) => (
             <IngredientCard
               key={idx}

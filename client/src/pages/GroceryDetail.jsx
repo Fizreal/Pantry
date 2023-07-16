@@ -152,16 +152,17 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
             </section>
           )
         ) : null}
-
         {groceryList.suggestions.length ? (
           <section name="Suggested ingredients">
-            <h2 className="text-lg m-2">Recipes</h2>
-            {groceryList.suggestions.map((suggestion) => (
-              <SuggestedIngredient
-                key={suggestion.name}
-                ingredient={suggestion}
-              />
-            ))}
+            <h2 className="text-lg m-2 text-center">Suggested ingredients</h2>
+            <div className="flex flex-wrap justify-center w-80 md:w-[700px] lg:w-[1020px]">
+              {groceryList.suggestions.map((suggestion) => (
+                <SuggestedIngredient
+                  key={suggestion.name}
+                  ingredient={suggestion}
+                />
+              ))}
+            </div>
           </section>
         ) : null}
         <section
