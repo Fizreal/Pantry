@@ -32,6 +32,7 @@ const SuggestedIngredient = ({ ingredient, updateGroceries }) => {
   return (
     <div className="flex flex-col p-2 w-80 m-2 rounded-lg card shadow">
       <h3 className="self-center text-lg">{ingredient.edaman.food.label}</h3>
+      <p>Recommended for: {ingredient.reason}</p>
       <form onSubmit={handleSubmit} className="flex flex-col">
         <div>
           <div className="my-2">
