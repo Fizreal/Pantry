@@ -69,3 +69,24 @@ export const finishGroceryList = async (groceryId, data) => {
     throw error
   }
 }
+
+export const ingredientSuggestions = async (groceryId) => {
+  try {
+    const response = await Client.put(`/groceryList/${groceryId}/suggestions`)
+    return response
+  } catch (error) {
+    throw error
+  }
+}
+
+export const addSuggestion = async (groceryId, data) => {
+  try {
+    const response = await Client.put(
+      `/groceryList/${groceryId}/addSuggestion`,
+      data
+    )
+    return response
+  } catch (error) {
+    throw error
+  }
+}

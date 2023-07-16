@@ -45,4 +45,13 @@ router.put(
   groceryListCtrl.finished
 )
 
+router.put(
+  '/:groceryId/suggestions',
+  middleware.stripToken,
+  middleware.verifyToken,
+  groceryListCtrl.suggestions
+)
+
+router.put('/:groceryId/addSuggestion', groceryListCtrl.addSuggestion)
+
 module.exports = router

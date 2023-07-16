@@ -21,10 +21,10 @@ const CreateRecipe = ({ updateRecipes, user }) => {
   }
 
   return user ? (
-    <section name="new recipe">
+    <section name="new recipe" className="flex flex-col items-center mt-8">
       <form
         onSubmit={handleSubmit}
-        className="w-80 flex flex-col border p-3 rounded-lg"
+        className="w-80 flex flex-col card p-3 rounded-lg "
       >
         <div className="my-1">
           <label htmlFor="name">Name:</label>
@@ -34,7 +34,7 @@ const CreateRecipe = ({ updateRecipes, user }) => {
             id="name"
             value={formValues.name}
             onChange={handleChange}
-            className="shadow appearance-none border rounded ml-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none input text-center rounded ml-2 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           />
         </div>
@@ -46,7 +46,7 @@ const CreateRecipe = ({ updateRecipes, user }) => {
             id="description"
             value={formValues.description}
             onChange={handleChange}
-            className="shadow appearance-none border rounded ml-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none input text-center rounded ml-2 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           />
         </div>
@@ -57,7 +57,7 @@ const CreateRecipe = ({ updateRecipes, user }) => {
             id="category"
             onChange={handleChange}
             defaultValue={'meal'}
-            className="shadow appearance-none border rounded  ml-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none input text-center rounded ml-2 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             required
           >
             <option value="Meal">Meal</option>
@@ -66,7 +66,7 @@ const CreateRecipe = ({ updateRecipes, user }) => {
             <option value="Dessert">Dessert</option>
           </select>
         </div>
-        <button className="my-2 py-1 px-2  self-center border rounded-xl">
+        <button className="my-2 py-1 px-2 self-center button rounded-xl">
           Create
         </button>
       </form>

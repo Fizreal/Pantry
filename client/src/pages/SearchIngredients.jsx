@@ -42,7 +42,7 @@ const SearchIngredients = ({ recipes, updateRecipes, user }) => {
   return user ? (
     <section
       name="search ingredient"
-      className="mt-8 flex flex-col items-center text-center"
+      className="mt-8 flex flex-col items-center text-center w-80 md:w-[700px] lg:w-[1020px]"
     >
       <div className="self-start ml-2">
         <Link to={`/recipes/${recipeId}`}>
@@ -57,9 +57,9 @@ const SearchIngredients = ({ recipes, updateRecipes, user }) => {
       <h1 className="text-2xl">Search Results</h1>
       {searchResults ? (
         <div className="flex flex-wrap justify-center w-80 md:w-[700px] lg:w-[1020px]">
-          {searchResults.map((ingredient) => (
+          {searchResults.map((ingredient, idx) => (
             <IngredientCard
-              key={ingredient.food.foodId}
+              key={idx}
               ingredient={ingredient}
               setSearchResults={setSearchResults}
               setSearch={setSearch}

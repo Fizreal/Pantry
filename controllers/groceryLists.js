@@ -1,8 +1,13 @@
 const axios = require('axios')
 const APP_ID = process.env.EDAMAN_ID
 const API_KEY = process.env.EDAMAN_KEY
-const DOMAIN = 'https://api.edamam.com/api/food-database/v2/parser/'
+const DOMAIN = 'https://api.edamam.com'
 require('dotenv').config()
+const { Configuration, OpenAIApi } = require('openai')
+const configuration = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY
+})
+const openai = new OpenAIApi(configuration)
 const User = require('../models/user')
 const GroceryList = require('../models/groceryList')
 const Recipe = require('../models/recipe')
@@ -135,6 +140,73 @@ const finished = async (req, res) => {
   }
 }
 
+const suggestions = async (req, res) => {
+  let groceryList = await GroceryList.findById(req.params.groceryId).populate(
+    'ingredients.ingredient'
+  )
+  let ingredientStrings = []
+  groceryList.ingredients.forEach((ingr) => {
+    ingredientStrings.push(
+      `${ingr.quantity} ${ingr.ingredient.measure} ${ingr.ingredient.name}`
+    )
+  })
+  let prompt = 'Grocery list:' + ingredientStrings.join(', ')
+
+  const response = await openai.createChatCompletion({
+    model: 'gpt-3.5-turbo',
+    messages: [
+      {
+        role: 'system',
+        content:
+          "When I provide you with a grocery list, list three specific foods not in the list that supplement nutrients that the list is is deficient in. Each suggestion should take the following format exactly:'Suggestion: *ingredient name here*, Reason: *reason here*.', and the reason should be kept brief. The response should be a single line with no lie breaks."
+      },
+      {
+        role: 'user',
+        content: prompt
+      }
+    ],
+    temperature: 1,
+    max_tokens: 256,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0
+  })
+  let formattedSuggestions = []
+  try {
+    let rawSuggestions = response.data.choices[0].message.content.split('.')
+    for (let i = 0; i < 3; i++) {
+      let suggestion = rawSuggestions[i].split(',')
+      let name = suggestion[0].split(':')[1].trim()
+      let reason = suggestion[1].split(':')[1].trim()
+      formattedSuggestions.push({ name: name, reason: reason })
+    }
+
+    let firstSuggestion = await axios.get(
+      `${DOMAIN}/api/food-database/v2/parser?app_id=${APP_ID}&app_key=${API_KEY}&ingr=${formattedSuggestions[0].name}`
+    )
+    formattedSuggestions[0]['edaman'] = firstSuggestion.data.hints[0]
+    let secondSuggestion = await axios.get(
+      `${DOMAIN}/api/food-database/v2/parser?app_id=${APP_ID}&app_key=${API_KEY}&ingr=${formattedSuggestions[0].name}`
+    )
+    formattedSuggestions[1]['edaman'] = secondSuggestion.data.hints[0]
+
+    let thirdSuggestion = await axios.get(
+      `${DOMAIN}/api/food-database/v2/parser?app_id=${APP_ID}&app_key=${API_KEY}&ingr=${formattedSuggestions[0].name}`
+    )
+    formattedSuggestions[2]['edaman'] = thirdSuggestion.data.hints[0]
+
+    groceryList.suggestions = formattedSuggestions
+    await groceryList.save()
+
+    res.send(groceryList)
+  } catch (error) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+  }
+}
+
+const addSuggestion = async (req, res) => {}
+
 module.exports = {
   index,
   create,
@@ -142,5 +214,7 @@ module.exports = {
   remove,
   delete: deleteGroceryList,
   compile,
-  finished
+  finished,
+  suggestions,
+  addSuggestion
 }

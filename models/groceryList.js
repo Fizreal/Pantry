@@ -12,6 +12,7 @@ const groceryListSchema = new Schema(
         quantity: { type: String }
       }
     ],
+    suggestions: [],
     date: { type: Date, default: new Date() },
     finished: { type: Boolean, required: true, default: false }
   },

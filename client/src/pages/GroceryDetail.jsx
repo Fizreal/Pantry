@@ -4,8 +4,10 @@ import {
   removeRecipe,
   deleteGroceryList,
   compileGroceries,
-  finishGroceryList
+  finishGroceryList,
+  ingredientSuggestions
 } from '../services/groceryListServices'
+import SuggestedIngredient from '../components/SuggestedIngredient'
 
 const GroceryDetail = ({ groceries, updateGroceries, user }) => {
   let navigate = useNavigate()
@@ -59,6 +61,12 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
   const handleFinished = async (e) => {
     e.preventDefault()
     await finishGroceryList(groceryId, formValues)
+    updateGroceries()
+  }
+
+  const handleSuggestions = async (e) => {
+    e.preventDefault()
+    await ingredientSuggestions(groceryId)
     updateGroceries()
   }
 
@@ -134,8 +142,27 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
                   ))}
                 </tbody>
               </table>
+              {groceryList.finished && !groceryList.suggestions.length ? (
+                <form onSubmit={handleSuggestions}>
+                  <button className="my-2 py-1 px-2 button rounded-xl">
+                    Get suggestions
+                  </button>
+                </form>
+              ) : null}
             </section>
           )
+        ) : null}
+
+        {groceryList.suggestions.length ? (
+          <section name="Suggested ingredients">
+            <h2 className="text-lg m-2">Recipes</h2>
+            {groceryList.suggestions.map((suggestion) => (
+              <SuggestedIngredient
+                key={suggestion.name}
+                ingredient={suggestion}
+              />
+            ))}
+          </section>
         ) : null}
         <section
           name="recipes"
@@ -175,6 +202,7 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
               </table>
             </div>
           ) : null}
+
           {!groceryList.finished ? (
             <Link
               to={`/groceries/${groceryList._id}/recipes`}
