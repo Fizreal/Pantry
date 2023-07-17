@@ -90,3 +90,15 @@ export const addSuggestion = async (groceryId, data) => {
     throw error
   }
 }
+
+export const removeSuggestion = async (groceryId, data) => {
+  try {
+    const response = await Client.put(
+      `/groceryList/${groceryId}/removeSuggestion`,
+      data
+    )
+    return response
+  } catch (error) {
+    throw error
+  }
+}

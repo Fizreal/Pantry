@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { addSuggestion } from '../services/groceryListServices'
+import {
+  addSuggestion,
+  removeSuggestion
+} from '../services/groceryListServices'
 
 const SuggestedIngredient = ({ ingredient, updateGroceries }) => {
   const { groceryId } = useParams()
@@ -25,6 +28,8 @@ const SuggestedIngredient = ({ ingredient, updateGroceries }) => {
 
   const handleRemove = async (e) => {
     e.preventDefault()
+    let name = { name: ingredient.name }
+    await removeSuggestion(groceryId, name)
     updateGroceries()
   }
 
@@ -39,7 +44,7 @@ const SuggestedIngredient = ({ ingredient, updateGroceries }) => {
       <div className="flex justify-between items-center">
         <div className="w-8"></div>
         <h3 className="j text-lg">{ingredient.edaman.food.label}</h3>
-        <form onSubmit={(e) => handleRemove(e)} className="p-1">
+        <form onSubmit={handleRemove} className="p-1">
           <button className=" hover:bg-gray-200 w-8 h-8 p-1 rounded-lg">
             <img src="/minus.png" alt="Remove" />
           </button>

@@ -58,5 +58,11 @@ router.put(
   middleware.verifyToken,
   groceryListCtrl.addSuggestion
 )
+router.put(
+  '/:groceryId/removeSuggestion',
+  middleware.stripToken,
+  middleware.verifyToken,
+  groceryListCtrl.removeSuggestion
+)
 
 module.exports = router

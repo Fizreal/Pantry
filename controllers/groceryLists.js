@@ -246,6 +246,25 @@ const addSuggestion = async (req, res) => {
   }
 }
 
+const removeSuggestion = async (req, res) => {
+  const { name } = req.body
+  let groceryList = await GroceryList.findById(req.params.groceryId)
+  try {
+    let idx = groceryList.suggestions
+      .map((suggestion) => suggestion.name)
+      .indexOf(name)
+    console.log(name, idx)
+    if (idx !== -1) {
+      groceryList.suggestions.splice(idx, 1)
+    }
+    await groceryList.save()
+    res.send(groceryList)
+  } catch (error) {
+    console.log(error)
+    res.status(401).send({ status: 'Error', msg: 'An error has occurred!' })
+  }
+}
+
 module.exports = {
   index,
   create,
@@ -255,5 +274,6 @@ module.exports = {
   compile,
   finished,
   suggestions,
-  addSuggestion
+  addSuggestion,
+  removeSuggestion
 }
