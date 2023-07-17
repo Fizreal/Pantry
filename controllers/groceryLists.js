@@ -158,7 +158,7 @@ const suggestions = async (req, res) => {
       {
         role: 'system',
         content:
-          "WAct as a nutritionist. When I provide you with a grocery list, list three specific foods not in the list that supplement nutrients that the list is is deficient in. Suggest a variety of different foods so the same ones aren't generated each time. Each suggestion should take the following format exactly:'Suggestion: *ingredient name here*, Reason: *reason here*.', and the reason should be kept brief. The response should be a single line with no line breaks."
+          "Act as a nutritionist. When I provide you with a grocery list, list three specific foods not in the list that supplement nutrients that the list is is deficient in. Suggest a variety of different foods so the same ones aren't generated each time. Each suggestion should take the following format exactly:'Suggestion: *ingredient name here*, Reason: *reason here*.', and the reason should be kept brief. The response should be a single line with no line breaks."
       },
       {
         role: 'user',

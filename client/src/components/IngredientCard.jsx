@@ -42,7 +42,6 @@ const IngredientCard = ({
       <form onSubmit={handleSubmit} className="flex flex-col">
         <div>
           <div className="my-2">
-            {' '}
             <label htmlFor="quantity">Quantity:</label>
             <input
               type="number"
@@ -52,18 +51,17 @@ const IngredientCard = ({
               value={formValues.quantity}
               min="0"
               onChange={handleChange}
-              className="w-10 text-center shadow appearance-none border rounded  ml-1 py-0.5 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-14 text-center shadow appearance-none rounded input ml-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
           <div className="my-2">
-            {' '}
             <label htmlFor="measure">Measure:</label>
             <select
               name="measure"
               id="measure"
               onChange={handleChange}
               value={formValues.measure}
-              className="shadow appearance-none border rounded  ml-1 py-0.5 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none input text-center rounded ml-2 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="" disabled>
                 Select unit measure

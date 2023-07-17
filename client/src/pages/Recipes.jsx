@@ -35,7 +35,7 @@ const Recipes = ({ recipes, user }) => {
           id="filter"
           onChange={handleChange}
           defaultValue="All"
-          className="shadow appearance-none border rounded  ml-1 py-0.5 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none input text-center rounded ml-2 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         >
           <option value="All">Show all</option>
           <option value="Meal">Meal</option>

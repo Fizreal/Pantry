@@ -27,8 +27,10 @@ const CreateRecipe = ({ updateRecipes, user }) => {
         onSubmit={handleSubmit}
         className="w-80 flex flex-col card p-3 rounded-lg "
       >
-        <div className="my-1">
-          <label htmlFor="name">Name:</label>
+        <div className="my-1 flex">
+          <div className="w-24">
+            <label htmlFor="name">Name:</label>
+          </div>
           <input
             type="text"
             name="name"
@@ -39,8 +41,10 @@ const CreateRecipe = ({ updateRecipes, user }) => {
             required
           />
         </div>
-        <div className="my-1">
-          <label htmlFor="description">Description:</label>
+        <div className="my-1 flex">
+          <div className="w-24">
+            <label htmlFor="description"> Description:</label>
+          </div>
           <input
             type="text"
             name="description"
@@ -51,8 +55,11 @@ const CreateRecipe = ({ updateRecipes, user }) => {
             required
           />
         </div>
-        <div className="my-1">
-          <label htmlFor="category">Category:</label>
+        <div className="my-1 flex">
+          <div className="w-24">
+            <label htmlFor="category">Category:</label>
+          </div>
+
           <select
             name="category"
             id="category"
