@@ -3,8 +3,7 @@ const APP_ID = process.env.EDAMAN_ID
 const API_KEY = process.env.EDAMAN_KEY
 const DOMAIN = 'https://api.edamam.com'
 require('dotenv').config()
-const User = require('../models/user')
-const Ingredient = require('../models/ingredient')
+const { Ingredient, User } = require('../models')
 
 const index = async (req, res) => {
   const { payload } = res.locals
@@ -21,12 +20,4 @@ const search = async (req, res) => {
   res.send(response.data.hints)
 }
 
-const suggestions = async (req, res) => {
-  const { search } = req.query
-  let response = await axios.get(
-    `${DOMAIN}/auto-complete?app_id=${APP_ID}&app_key=${API_KEY}&q=${search}`
-  )
-  res.send(response.data)
-}
-
-module.exports = { index, search, suggestions }
+module.exports = { index, search }

@@ -14,11 +14,5 @@ router.get(
   middleware.verifyToken,
   ingredientCtrl.search
 )
-router.get(
-  '/suggestions',
-  middleware.stripToken,
-  middleware.verifyToken,
-  ingredientCtrl.suggestions
-)
 
 module.exports = router

@@ -8,11 +8,7 @@ const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY
 })
 const openai = new OpenAIApi(configuration)
-const User = require('../models/user')
-const GroceryList = require('../models/groceryList')
-const Recipe = require('../models/recipe')
-const Ingredient = require('../models/ingredient')
-const groceryList = require('../models/groceryList')
+const { GroceryList, Recipe, Ingredient, User } = require('../models')
 
 const index = async (req, res) => {
   const { payload } = res.locals

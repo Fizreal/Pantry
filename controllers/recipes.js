@@ -1,11 +1,4 @@
-const axios = require('axios')
-const APP_ID = process.env.EDAMAN_ID
-const API_KEY = process.env.EDAMAN_KEY
-const DOMAIN = 'https://api.edamam.com/api/food-database/v2/parser/'
-require('dotenv').config()
-const User = require('../models/user')
-const Recipe = require('../models/recipe')
-const Ingredient = require('../models/ingredient')
+const { Recipe, Ingredient, User } = require('../models')
 
 const index = async (req, res) => {
   const { payload } = res.locals
@@ -74,7 +67,6 @@ const remove = async (req, res) => {
   let index = recipe.ingredients
     .map((ingredientObj) => ingredientObj.ingredient.toString())
     .indexOf(req.params.ingredientId)
-  console.log(index)
   try {
     if (index !== -1) {
       recipe.ingredients.splice(index, 1)
