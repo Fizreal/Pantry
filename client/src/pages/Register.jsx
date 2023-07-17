@@ -58,7 +58,7 @@ const Register = () => {
     <div className="w-full max-w-xs mt-16">
       <form
         onSubmit={handleSubmit}
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-black/30 shadow-md rounded-xl px-8 pt-6 pb-8 mb-4"
       >
         <div className="mb-4">
           <input

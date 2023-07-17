@@ -48,7 +48,7 @@ const RecipeDetail = ({ recipes, updateRecipes, user }) => {
         </div>
         {recipe.ingredients.length ? (
           <section name="ingredients" className="flex flex-col text-center m-2">
-            <h2 className="text-lg m-2">Ingredients</h2>
+            <h2 className="text-lg m-2 underline">Ingredients</h2>
             <table>
               <thead>
                 <tr>

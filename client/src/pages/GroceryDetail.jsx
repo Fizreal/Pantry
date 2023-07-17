@@ -86,7 +86,9 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
         {groceryList.ingredients.length ? (
           !groceryList.finished ? (
             <section className="text-center">
-              <h2 className="text-lg m-2">Consolidated shopping list</h2>
+              <h2 className="text-lg m-2 underline">
+                Consolidated shopping list
+              </h2>
               <form onSubmit={handleFinished}>
                 <div className="grid grid-cols-3 p-1">
                   <h3 className="w-28">Total Quantity</h3>
@@ -123,7 +125,9 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
             </section>
           ) : (
             <section className="text-center">
-              <h2 className="text-lg m-2">Consolidated shopping list</h2>
+              <h2 className="text-lg m-2 underline">
+                Consolidated shopping list
+              </h2>
               <table>
                 <thead>
                   <tr>
@@ -154,7 +158,9 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
         ) : null}
         {groceryList.suggestions.length ? (
           <section name="Suggested ingredients">
-            <h2 className="text-lg m-2 text-center">Suggested ingredients</h2>
+            <h2 className="text-lg m-2 text-center underline">
+              Suggested ingredients
+            </h2>
             <div className="flex flex-wrap justify-center w-80 md:w-[700px] lg:w-[1020px]">
               {groceryList.suggestions.map((suggestion) => (
                 <SuggestedIngredient
@@ -172,7 +178,7 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
         >
           {groceryList.recipes.length ? (
             <div>
-              <h2 className="text-lg m-2">Recipes</h2>
+              <h2 className="text-lg m-2 underline">Recipes</h2>
               <table>
                 <thead>
                   <tr>

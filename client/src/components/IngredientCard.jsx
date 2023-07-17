@@ -41,8 +41,10 @@ const IngredientCard = ({
       <h3 className="self-center text-lg">{ingredient.food.label}</h3>
       <form onSubmit={handleSubmit} className="flex flex-col">
         <div>
-          <div className="my-2">
-            <label htmlFor="quantity">Quantity:</label>
+          <div className="my-2 flex w-20">
+            <div className="">
+              <label htmlFor="quantity">Quantity:</label>
+            </div>
             <input
               type="number"
               name="quantity"
@@ -51,11 +53,13 @@ const IngredientCard = ({
               value={formValues.quantity}
               min="0"
               onChange={handleChange}
-              className="w-14 text-center shadow appearance-none rounded input ml-1 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="w-14 text-center shadow appearance-none rounded input ml-2 py-1 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>
-          <div className="my-2">
-            <label htmlFor="measure">Measure:</label>
+          <div className="my-2 flex w-20">
+            <div className="">
+              <label htmlFor="measure">Measure:</label>
+            </div>
             <select
               name="measure"
               id="measure"
