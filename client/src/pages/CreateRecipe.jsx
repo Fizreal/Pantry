@@ -27,7 +27,7 @@ const CreateRecipe = ({ updateRecipes, user }) => {
         onSubmit={handleSubmit}
         className="w-80 flex flex-col card p-3 rounded-lg "
       >
-        <div className="my-1 flex">
+        <div className="my-1 flex items-center">
           <div className="w-24">
             <label htmlFor="name">Name:</label>
           </div>
@@ -41,7 +41,7 @@ const CreateRecipe = ({ updateRecipes, user }) => {
             required
           />
         </div>
-        <div className="my-1 flex">
+        <div className="my-1 flex items-center">
           <div className="w-24">
             <label htmlFor="description"> Description:</label>
           </div>
@@ -55,7 +55,7 @@ const CreateRecipe = ({ updateRecipes, user }) => {
             required
           />
         </div>
-        <div className="my-1 flex">
+        <div className="my-1 flex items-center">
           <div className="w-24">
             <label htmlFor="category">Category:</label>
           </div>

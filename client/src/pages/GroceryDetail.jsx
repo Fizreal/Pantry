@@ -9,11 +9,14 @@ import {
 } from '../services/groceryListServices'
 import SuggestedIngredient from '../components/SuggestedIngredient'
 
+import { TailSpin } from 'react-loader-spinner'
+
 const GroceryDetail = ({ groceries, updateGroceries, user }) => {
   let navigate = useNavigate()
   const [groceryList, setGroceryList] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [formValues, setFormValues] = useState({})
+  const [loading, setLoading] = useState(false)
 
   const { groceryId } = useParams()
 
@@ -66,8 +69,10 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
 
   const handleSuggestions = async (e) => {
     e.preventDefault()
+    setLoading(true)
     await ingredientSuggestions(groceryId)
     updateGroceries()
+    setLoading(false)
   }
 
   return user ? (
@@ -155,6 +160,21 @@ const GroceryDetail = ({ groceries, updateGroceries, user }) => {
               ) : null}
             </section>
           )
+        ) : null}
+        {loading ? (
+          <section className="flex flex-col items-center">
+            <h2 className="text-lg m-2 text-center">Generating suggestions</h2>
+            <TailSpin
+              height="80"
+              width="80"
+              color="#4fa94d"
+              ariaLabel="tail-spin-loading"
+              radius="1"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+            />
+          </section>
         ) : null}
         {groceryList.suggestions.length ? (
           <section name="Suggested ingredients">
