@@ -137,6 +137,7 @@ const finished = async (req, res) => {
 }
 
 const suggestions = async (req, res) => {
+  console.log('hits suggestions controller')
   let groceryList = await GroceryList.findById(req.params.groceryId).populate(
     'ingredients.ingredient'
   )
@@ -148,27 +149,27 @@ const suggestions = async (req, res) => {
   })
   let prompt = 'Grocery list:' + ingredientStrings.join(', ')
 
-  const response = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
-    messages: [
-      {
-        role: 'system',
-        content:
-          "Act as a nutritionist. When I provide you with a grocery list, list three specific foods not in the list that supplement nutrients that the list is is deficient in. Suggest a variety of different foods so the same ones aren't generated each time. Each suggestion should take the following format exactly:'Suggestion: *ingredient name here*, Reason: *reason here*.', and the reason should be kept brief. The response should be a single line with no line breaks."
-      },
-      {
-        role: 'user',
-        content: prompt
-      }
-    ],
-    temperature: 1.5,
-    max_tokens: 256,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0
-  })
-  let formattedSuggestions = []
   try {
+    const response = await openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'system',
+          content:
+            "Act as a nutritionist. When I provide you with a grocery list, list three specific foods not in the list that supplement nutrients that the list is is deficient in. Suggest a variety of different foods so the same ones aren't generated each time. Each suggestion should take the following format exactly:'Suggestion: *ingredient name here*, Reason: *reason here*.', and the reason should be kept brief. The response should be a single line with no line breaks."
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      temperature: 1.5,
+      max_tokens: 256,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0
+    })
+    let formattedSuggestions = []
     let rawSuggestions = response.data.choices[0].message.content.split('.')
     for (let i = 0; i < 3; i++) {
       let suggestion = rawSuggestions[i].split(',')
@@ -249,7 +250,6 @@ const removeSuggestion = async (req, res) => {
     let idx = groceryList.suggestions
       .map((suggestion) => suggestion.name)
       .indexOf(name)
-    console.log(name, idx)
     if (idx !== -1) {
       groceryList.suggestions.splice(idx, 1)
     }

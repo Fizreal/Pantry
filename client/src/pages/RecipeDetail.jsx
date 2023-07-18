@@ -42,7 +42,7 @@ const RecipeDetail = ({ recipes, updateRecipes, user }) => {
     recipe ? (
       <section name="recipe" className="flex flex-col items-center mt-8">
         <h1 className="text-2xl mb-2">{recipe.name}</h1>
-        <div>
+        <div className="w-80 md:w-[700px] text-center">
           <p className="my-2">Category: {recipe.category}</p>
           <p className="my-2">Description: {recipe.description}</p>
         </div>

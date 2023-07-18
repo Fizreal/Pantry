@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { addIngredient } from '../services/recipeServices'
+import { formToJSON } from 'axios'
 
 const IngredientCard = ({
   ingredient,
@@ -11,8 +12,8 @@ const IngredientCard = ({
   const { recipeId } = useParams()
 
   const [formValues, setFormValues] = useState({
-    name: ingredient.food.label,
-    edamanID: ingredient.food.foodId,
+    name: null,
+    edamanID: null,
     measure: '',
     quantity: '0'
   })
@@ -31,10 +32,17 @@ const IngredientCard = ({
   }
 
   useEffect(() => {
+    if (formValues.name !== ingredient.food.label) {
+      setFormValues({
+        ...formValues,
+        name: ingredient.food.label,
+        edamanID: ingredient.food.foodId
+      })
+    }
     let checkDisabled =
       formValues.measure && formValues.quantity !== '0' ? false : true
     setDisabled(checkDisabled)
-  }, [formValues])
+  }, [ingredient, formValues])
 
   return (
     <div className="flex flex-col p-2 w-80 m-2 rounded-lg card shadow">
